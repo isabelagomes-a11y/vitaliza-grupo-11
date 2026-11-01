@@ -1,8 +1,8 @@
 # Completude do onboarding.csv
 
-Base: `dados/brutos/onboarding.csv`, 63929 linhas. Gerado por `src/completude_onboarding.py`.
+Base: `dados/brutos/onboarding.csv`, 63929 linhas. Gerado por `src/completude.py onboarding`.
 
-- **Vazios:** célula vazia ou só com espaços.
+- **Vazios:** nulo, célula vazia ou só com espaços.
 - **Sem conteúdo:** "-", ".", "asdf", "kkkk", "nada", "nao sei", "ok", "sla", "x", "😂".
   Critério proposto, ainda não registrado como decisão de limpeza.
 
@@ -26,8 +26,8 @@ Base: `dados/brutos/onboarding.csv`, 63929 linhas. Gerado por `src/completude_on
 - **`nivel` (média):** Inferível em parte por ritmo e frequência em atividades.parquet, mas nível declarado e real podem divergir; errar muda tom e oferta da mensagem.
 - **`dias_por_semana` (média):** A diferença entre intenção e uso real é candidata a sinal de saída; sem a intenção, sobra só o uso. Fora os vazios, tem 23 grafias ('3', '3x', '3 vezes', 'todos'): padronização, não falta.
 
-## Contas sem questionário
+## Contas sem linha nesta base
 
-1019 das 64948 contas de `usuarios.csv` (1.57%) não têm linha no onboarding. O dicionário não explica por quê. Criticidade baixa por ora; a reavaliar se se concentrarem em pagantes.
+1019 das 64948 contas de `usuarios.csv` (1.57%) não têm linha em `onboarding.csv`. O dicionário não explica por quê. Criticidade baixa por ora; a reavaliar se se concentrarem em pagantes.
 
 Critérios de criticidade: **alta**, a falta pode afetar uma decisão de negócio; **média**, dá para inferir, mas a inferência pode levar a uma direção equivocada; **baixa**, dá para seguir com menos detalhe.
