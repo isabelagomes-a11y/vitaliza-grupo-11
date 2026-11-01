@@ -51,7 +51,9 @@ def candidatos_sem_conteudo(df):
         if s.nunique() < CANDIDATO_MIN_DISTINTOS:
             continue
         vc = s[s != ""].str.lower().value_counts()
-        vc = vc[(vc.index.str.len() <= CANDIDATO_MAX_CHARS) & (100 * vc / n >= CANDIDATO_MIN_PCT)]
+        # Só dígitos são códigos (ex.: prefixo de CEP), não respostas vazias.
+        vc = vc[(vc.index.str.len() <= CANDIDATO_MAX_CHARS) & ~vc.index.str.fullmatch(r"\d+")
+                & (100 * vc / n >= CANDIDATO_MIN_PCT)]
         if len(vc):
             achados[col] = vc
     return achados
