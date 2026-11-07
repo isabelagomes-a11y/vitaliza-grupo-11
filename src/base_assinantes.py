@@ -19,7 +19,8 @@ import pandas as pd
 
 from situacao_assinantes import ativos_em
 
-sys.stdout.reconfigure(encoding="utf-8")
+if hasattr(sys.stdout, "reconfigure"):  # no notebook, a saída não tem reconfigure
+    sys.stdout.reconfigure(encoding="utf-8")
 
 RAIZ = Path(__file__).resolve().parents[1]
 PROCESSADOS = RAIZ / "dados" / "processados"
