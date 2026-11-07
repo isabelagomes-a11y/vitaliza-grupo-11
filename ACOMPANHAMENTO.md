@@ -26,9 +26,9 @@
 |---|---|---|---|---|
 | 1 | Remover as 1.941 cobranças duplicadas | `src/vitaliza/features.py` (S3: `src/limpar_pagamentos.py`) | | ✅ |
 | 2 | Notebook de EDA unificado + 11 gráficos | `notebooks/eda_unificada.ipynb` · `saidas/graficos_unificados/` | | ✅ |
-| 3 | Customer Segmentation Report (5 p.) | `saidas/entrega_semana5_unificada/` | | ✅ |
-| 4 | 4 cartões de persona | `saidas/entrega_semana5_unificada/` | | ✅ |
-| 5 | Mini deck analítico (5 slides) | `saidas/entrega_semana5_unificada/` | | ✅ |
+| 3 | Customer Segmentation Report (5 p.) | `saidas/entrega_semana5/` | | ✅ |
+| 4 | 4 cartões de persona | `saidas/entrega_semana5/` | | ✅ |
+| 5 | Mini deck analítico (5 slides) | `saidas/entrega_semana5/` | | ✅ |
 | 6 | Revisão do grupo | — | todos | ⬜ |
 | 7 | Pasta pública no Drive + link na Adalove (cada um) | — | todos | ⬜ |
 
@@ -84,3 +84,4 @@
 | 07/11/2026 | Diretório unificado criado com as 3 soluções, comparativo, solução unificada, roadmap e acompanhamento. Números da S3 conferidos com o código da S1. |
 | 07/11/2026 | Decisões D1–D3 tomadas. Código unificado em `src/vitaliza/` (com as duplicadas removidas). Artefatos da semana 5 gerados: relatório (5 p.), cartões de persona (4), mini deck (5 slides), EDA (notebook + 11 gráficos). Modelo retreinado sem idade e sexo. |
 | 07/11/2026 | Tudo levado para o repositório do grupo, branch `dev`, num commit só. |
+| 07/11/2026 | Entrega única da semana 5 em `saidas/entrega_semana5/` (nomes `Vitaliza_G11_…`); entrega original da S3 movida para `saidas/solucao3/`. Script `src/montar_entrega_semana5.py` monta a pasta do Drive. |

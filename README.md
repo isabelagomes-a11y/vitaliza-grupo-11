@@ -37,7 +37,9 @@ O grupo fez três trabalhos em paralelo. Eles foram comparados e somados numa so
 | `ACOMPANHAMENTO.md` | checklist vivo: decisões, donos, status, histórico |
 | `src/vitaliza/` | código unificado: base, limpeza, variáveis e segmentos |
 | `src/build_eda_unificada.py` | gera `notebooks/eda_unificada.ipynb`, os gráficos e os números |
-| `saidas/entrega_semana5_unificada/` | relatório de segmentação (5 p.), cartões de persona e mini deck, com as fontes em HTML |
+| `saidas/entrega_semana5/` | **entrega final da semana 5**: relatório de segmentação (5 p.), cartões de persona e mini deck, com as fontes em HTML |
+| `src/montar_entrega_semana5.py` | monta a pasta para o Google Drive só com o que vai ser entregue |
+| `saidas/solucao3/` | registro da entrega original da S3 (Word, PowerPoint e PDF) |
 | `saidas/graficos_unificados/` | os 11 gráficos dos documentos e `numeros.json` |
 | `docs/diagramas/` | fluxograma do sistema (`.drawio`, 3 páginas) e imagens PNG |
 
