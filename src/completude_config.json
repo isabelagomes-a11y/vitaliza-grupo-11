@@ -58,5 +58,19 @@
       "sessoes_app": ["alta", "Única fonte de aberturas do app (engajamento sem treino); nenhuma outra base supre."]
     },
     "nota_contas": "Mês sem linha nem sempre é uso zero: de 219 a 379 assinantes de 31/07 não têm linha em maio, junho ou julho, e cerca de 28% deles têm treinos no atividades.parquet nesses meses. Tratados como uso zero com marcação (ver decisoes.md)."
+  },
+  "pagamentos": {
+    "arquivo": "pagamentos.csv",
+    "sem_conteudo": [],
+    "criticidade": {
+      "pagamento_id": ["baixa", "Só identifica a linha; foi pelos IDs consecutivos que se viu que 1.941 cobranças estavam duplicadas."],
+      "user_id": ["alta", "Liga a cobrança ao assinante. Completo; todos os usuários têm assinatura."],
+      "data_hora": ["alta", "Situa a cobrança no tempo e permite usar só pagamentos até a data de referência. Lojas em UTC, site em Brasília (como nos eventos)."],
+      "valor": ["alta", "É o valor do assinante (receita). Dois formatos ('34.90' e 'R$ 34,90', este só no site até 30/06/2025); negativos são estornos e chargebacks."],
+      "metodo": ["média", "O canal também está em assinaturas.csv; diverge em 48 assinantes (Pix com uma cobrança no cartão)."],
+      "status": ["alta", "Separa cobrança aprovada, recusada, estornada e chargeback; base para identificar saída por falha de cobrança."],
+      "tentativa": ["média", "Não se comporta como no dicionário: das tentativas 2, só 54 vêm depois de uma recusa. Não usada; a falha de cobrança é vista pelo status e pelo período de carência."]
+    },
+    "nota_contas": "São contas que nunca pagaram desde 07/2024 (grátis ou só trial). Criticidade baixa: é o esperado num app freemium."
   }
 }
