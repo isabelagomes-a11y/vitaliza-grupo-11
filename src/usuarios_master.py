@@ -1,15 +1,16 @@
 """Base master de usuários: usuarios.csv sem as contas sem data de nascimento ou sexo
 e sem as contas com idade impossível.
 
-Uso: python src/usuarios_master.py
+Uso: python src/usuarios_master.py   (depois de src/limpar_usuarios.py)
 
-Lê dados/brutos/usuarios.csv (sem alterar) e grava em dados/processados/:
+Lê dados/processados/usuarios_limpo.csv (usuarios.csv com grafias padronizadas) e grava
+em dados/processados/:
 - usuarios_master.csv: contas com data_nascimento e sexo preenchidos e idade entre
   IDADE_MIN e IDADE_MAX anos em DATA_REF (ver calcular_idade.py);
 - usuarios_removidos.csv: user_id e motivo de cada conta removida.
 
-Decisões registradas em decisoes.md. Não corrige mais nada: grafias de sexo, datas de
-cadastro posteriores ao corte e o canal "interno" ficam para decisões próprias.
+Decisões registradas em decisoes.md. As marcações de usuarios_limpo.csv (cadastro inválido,
+conta duplicada, início antes do cadastro) seguem como colunas, sem filtrar.
 """
 import sys
 from pathlib import Path
@@ -21,15 +22,14 @@ from calcular_idade import DATA_REF, IDADE_MAX, IDADE_MIN, idade_em
 sys.stdout.reconfigure(encoding="utf-8")
 
 RAIZ = Path(__file__).resolve().parents[1]
-BRUTOS = RAIZ / "dados" / "brutos"
 PROCESSADOS = RAIZ / "dados" / "processados"
 
 OBRIGATORIAS = ["data_nascimento", "sexo"]
 
 
 def main():
-    df = pd.read_csv(BRUTOS / "usuarios.csv", dtype=str, keep_default_na=False)
-    print(f"usuarios.csv: {len(df)} linhas")
+    df = pd.read_csv(PROCESSADOS / "usuarios_limpo.csv", dtype=str, keep_default_na=False)
+    print(f"usuarios_limpo.csv: {len(df)} linhas")
 
     falta = pd.DataFrame({col: df[col].str.strip() == "" for col in OBRIGATORIAS})
     master = df

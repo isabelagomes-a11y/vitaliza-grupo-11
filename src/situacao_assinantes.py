@@ -24,7 +24,8 @@ from pathlib import Path
 
 import pandas as pd
 
-sys.stdout.reconfigure(encoding="utf-8")
+if hasattr(sys.stdout, "reconfigure"):  # no notebook, a saída não tem reconfigure
+    sys.stdout.reconfigure(encoding="utf-8")
 
 RAIZ = Path(__file__).resolve().parents[1]
 BRUTOS = RAIZ / "dados" / "brutos"

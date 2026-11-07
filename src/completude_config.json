@@ -43,5 +43,34 @@
       "detalhe": ["média", "Só existe em assinatura_expirada: 6.071 das 17.830 têm motivo (renovacao_desligada, falha_pagamento, chargeback, reembolso). Separar saída voluntária de falha de cobrança pode ser inferido por periodo_carencia e pagamentos.csv, mas a inferência pode errar."]
     },
     "nota_contas": "São contas que não testaram nem assinaram desde 01/07/2024, início do histórico. Criticidade baixa: é o esperado num app freemium."
+  },
+  "uso_mensal": {
+    "arquivo": "uso_mensal.csv",
+    "sem_conteudo": [],
+    "criticidade": {
+      "user_id": ["alta", "Chave para ligar o uso ao assinante. Completo; nenhum user_id fora de usuarios.csv; sem duplicado por usuário e mês."],
+      "mes": ["alta", "Situa o uso no tempo e permite usar só meses anteriores à data de referência. Completo, de 2025-01 a 2026-09. Cobertura muda em jan/2026: em 2025 quase só pagantes; a partir de 2026 também usuários grátis."],
+      "atividades": ["alta", "Frequência de treino, principal lente de comportamento. Completa e coerente (= ar livre + vídeo). Em 2026 diverge do atividades.parquet em 13% dos usuário-mês (parquet sempre maior)."],
+      "atividades_ar_livre": ["média", "Distingue perfil de treino; o tipo de cada treino de 2026 também está em atividades.parquet."],
+      "atividades_video": ["média", "Distingue perfil de treino; o tipo de cada treino de 2026 também está em atividades.parquet."],
+      "minutos": ["média", "Intensidade do uso; recalculável pelo parquet em 2026, mas as fontes divergem. Sem valores impossíveis (20 a 99 min por treino entre p1 e p99)."],
+      "dias_ativos": ["média", "Regularidade do uso; recalculável pelo parquet em 2026. Coerente: nunca maior que os dias do mês nem que o número de treinos."],
+      "sessoes_app": ["alta", "Única fonte de aberturas do app (engajamento sem treino); nenhuma outra base supre."]
+    },
+    "nota_contas": "Mês sem linha nem sempre é uso zero: de 219 a 379 assinantes de 31/07 não têm linha em maio, junho ou julho, e cerca de 28% deles têm treinos no atividades.parquet nesses meses. Tratados como uso zero com marcação (ver decisoes.md)."
+  },
+  "pagamentos": {
+    "arquivo": "pagamentos.csv",
+    "sem_conteudo": [],
+    "criticidade": {
+      "pagamento_id": ["baixa", "Só identifica a linha; foi pelos IDs consecutivos que se viu que 1.941 cobranças estavam duplicadas."],
+      "user_id": ["alta", "Liga a cobrança ao assinante. Completo; todos os usuários têm assinatura."],
+      "data_hora": ["alta", "Situa a cobrança no tempo e permite usar só pagamentos até a data de referência. Lojas em UTC, site em Brasília (como nos eventos)."],
+      "valor": ["alta", "É o valor do assinante (receita). Dois formatos ('34.90' e 'R$ 34,90', este só no site até 30/06/2025); negativos são estornos e chargebacks."],
+      "metodo": ["média", "O canal também está em assinaturas.csv; diverge em 48 assinantes (Pix com uma cobrança no cartão)."],
+      "status": ["alta", "Separa cobrança aprovada, recusada, estornada e chargeback; base para identificar saída por falha de cobrança."],
+      "tentativa": ["média", "Não se comporta como no dicionário: das tentativas 2, só 54 vêm depois de uma recusa. Não usada; a falha de cobrança é vista pelo status e pelo período de carência."]
+    },
+    "nota_contas": "São contas que nunca pagaram desde 07/2024 (grátis ou só trial). Criticidade baixa: é o esperado num app freemium."
   }
 }
