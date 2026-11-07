@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Vitaliza · Plano de Retenção v2</title>
+<style>
+  @page { size: 297mm 167mm; margin: 0; }
+  :root {
+    --ink: #14213d; --muted: #5c677d; --line: #d9dee7; --bg: #ffffff;
+    --accent: #0f766e; --accent-soft: #e6f4f2; --warn: #b45309; --warn-soft: #fdf3e6;
+    --bad: #b91c1c; --good: #15803d;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; color: var(--ink); background: var(--bg); font-size: 10.5pt; line-height: 1.35; }
+  .slide { width: 297mm; height: 167mm; padding: 11mm 13mm 9mm; position: relative; page-break-after: always; overflow: hidden; display: flex; flex-direction: column; }
+  .slide:last-child { page-break-after: auto; }
+  .kicker { font-size: 8.5pt; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 2mm; }
+  h1 { font-size: 21pt; line-height: 1.12; margin: 0 0 4mm; font-weight: 750; }
+  h2 { font-size: 11pt; margin: 0 0 1.5mm; }
+  p { margin: 0 0 2mm; }
+  .sub { color: var(--muted); font-size: 10.5pt; margin-bottom: 4mm; }
+  .foot { position: absolute; left: 13mm; right: 13mm; bottom: 4.5mm; font-size: 7.5pt; color: var(--muted); display: flex; justify-content: space-between; border-top: 1px solid var(--line); padding-top: 1.5mm; }
+  .grid { display: grid; gap: 4mm; }
+  .g2 { grid-template-columns: 1fr 1fr; } .g3 { grid-template-columns: 1fr 1fr 1fr; } .g4 { grid-template-columns: repeat(4, 1fr); }
+  .card { border: 1px solid var(--line); border-radius: 2.5mm; padding: 3mm 3.5mm; }
+  .card.hl { background: var(--accent-soft); border-color: #b7e0da; }
+  .card.warn { background: var(--warn-soft); border-color: #f1d3a8; }
+  .big { font-size: 20pt; font-weight: 800; color: var(--accent); line-height: 1.05; }
+  .big.bad { color: var(--bad); }
+  .small { font-size: 8.5pt; color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+  th { text-align: left; font-size: 8pt; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); border-bottom: 1.5px solid var(--ink); padding: 1.2mm 1.5mm; }
+  td { border-bottom: 1px solid var(--line); padding: 1.3mm 1.5mm; vertical-align: top; }
+  .tag { display: inline-block; font-size: 7.5pt; font-weight: 700; padding: .3mm 1.6mm; border-radius: 1mm; }
+  .t-ok { background: #dcfce7; color: var(--good); } .t-mid { background: var(--warn-soft); color: var(--warn); } .t-no { background: #fee2e2; color: var(--bad); }
+  .tbc { color: var(--warn); font-weight: 700; }
+  ul { margin: 0; padding-left: 4.5mm; } li { margin-bottom: 1mm; }
+  .flow { display: flex; gap: 2mm; align-items: stretch; margin: 2mm 0 4mm; }
+  .flow div { flex: 1; background: var(--accent-soft); border-radius: 2mm; padding: 2mm; font-size: 8.5pt; }
+  .flow b { display: block; font-size: 9.5pt; color: var(--accent); }
+  .quote { border-left: 3px solid var(--accent); padding: 1.5mm 3mm; background: #f7f9fb; font-size: 9pt; margin-bottom: 2mm; }
+</style>
+</head>
+<body>
+
+<!-- 0 -->
+<section class="slide">
+  <div class="kicker">Vitaliza · Plano de Inteligência de Retenção · versão 2 (números do data room)</div>
+  <h1>Contatar menos, reter mais: um sistema que diz quem vai sair, em quem agir, com qual mensagem e quanto isso rende</h1>
+  <p class="sub">Data de corte 30/09/2026 · 14.753 pagantes · 1.794 saídas previstas até 29/11 · decisão para novembro e dezembro de 2026</p>
+  <div class="flow">
+    <div><b>1 · Dados</b>13 arquivos integrados pelo user_id; status reconstruído pelos eventos e conferido com o enunciado</div>
+    <div><b>2 · Extração</b>posts, chamados e onboarding viram variáveis; heatmaps testados e descartados</div>
+    <div><b>3 · Previsão</b>risco de saída em 60 dias; AUC 0,94 fora do tempo, top 1.500 captura 66%</div>
+    <div><b>4 · Decisão</b>regra por célula a partir do sorteio de 10/08: quem recebe o desafio e quem fica quieto</div>
+    <div><b>5 · Mensagem</b>IA generativa escreve o texto a partir de um briefing com limites</div>
+  </div>
+  <div class="grid g4">
+    <div class="card"><div class="big bad">5,6% → 6,6%</div><div class="small">churn mensal. +0,87 pp vem do mensal (reajuste e falha de GPS); +0,37 pp das renovações anuais (224 → 670 vencimentos em janeiro)</div></div>
+    <div class="card"><div class="big">11.599</div><div class="small">recebem o desafio por push + e-mail; <b>3.154</b> ficam quietos de propósito (dorminhocos anuais e quem já desligou a renovação)</div></div>
+    <div class="card"><div class="big">~468</div><div class="small">saídas evitadas por onda contra o controle: 260 no mensal e 207 desligamentos de renovação evitados no anual</div></div>
+    <div class="card hl"><div class="big">R$ 93 mil</div><div class="small">lucro líquido incremental por onda (6 meses de margem no mensal). Só o mensal: R$ 49 mil. Faixa: R$ 69–142 mil</div></div>
+  </div>
+  <p class="small" style="margin-top:4mm"><b>Pedido ao Conselho:</b> aprovar a regra seletiva para nov–dez (~R$ 12,5 mil de R$ 80 mil), vetar o cupom em massa e o contato com dorminhocos anuais, tratar a falha de GPS como incidente de retenção e autorizar os testes de WhatsApp e CS com critério de parada.</p>
+  <div class="foot"><span>Fonte: data room Vitaliza (corte 30/09/2026) · notebook Vitaliza_analise.ipynb</span><span>Sumário executivo</span></div>
+</section>
+
+<!-- 1 -->
+<section class="slide">
+  <div class="kicker">Objetivo 1 · Contar e medir a base (descritiva)</div>
+  <h1>Um número oficial de ativos e de churn, com a regra que o produz e reproduz o enunciado</h1>
+  <div class="grid g2" style="flex:1">
+    <div>
+      <h2>A regra reproduz exatamente os números da empresa</h2>
+      <table>
+        <tr><th>Medida</th><th>Enunciado</th><th>Reconstruído</th></tr>
+        <tr><td>Ativos em 30/09/2026</td><td>14.753</td><td><b>14.753</b></td></tr>
+        <tr><td>Ativos no início de jan/25 · set/26</td><td>8.540 · 14.319</td><td><b>8.540 · 14.319</b></td></tr>
+        <tr><td>Abril/26: perdas ÷ ativos</td><td>1.154 ÷ 14.237</td><td><b>1.154 ÷ 14.237</b></td></tr>
+        <tr><td>Churn médio 2025 · jan–set/26</td><td>5,6% · 6,6%</td><td><b>5,6% · 6,6%</b></td></tr>
+        <tr><td>Plano no corte</td><td colspan="2">57,5% anual · 42,5% mensal</td></tr>
+        <tr><td>Canal no corte</td><td colspan="2">App Store 36,6% · Google Play 33,6% · cartão 20,3% · Pix 9,5%</td></tr>
+      </table>
+      <h2 style="margin-top:3mm">Churn mensal por plano × canal (média 2025 → 2026)</h2>
+      <table>
+        <tr><th></th><th>App Store</th><th>Google Play</th><th>Cartão</th><th>Pix</th></tr>
+        <tr><td>Mensal</td><td>8,6 → 9,6%</td><td><b>8,4 → 11,3%</b></td><td>10,2 → 12,4%</td><td>9,1 → 10,9%</td></tr>
+        <tr><td>Anual</td><td>2,6 → 3,1%</td><td>2,7 → 3,4%</td><td>2,9 → 3,6%</td><td>2,8 → 3,2%</td></tr>
+      </table>
+      <p class="small" style="margin-top:1.5mm">A maior alta é do mensal no Google Play (+2,9 pp), coerente com a falha de GPS no Android.</p>
+    </div>
+    <div>
+      <h2>Regras de contagem fixadas</h2>
+      <ul>
+        <li><b>Ativo</b> = período pagante aberto em <code>eventos_assinatura</code>. Quem desligou a renovação continua ativo até expirar.</li>
+        <li><b>Perda</b> = <code>assinatura_expirada</code> ou <code>reembolso</code>. Assinaturas anteriores a 07/2024 entram como ativas no início do log.</li>
+        <li><b>Involuntário</b> (expirou depois de <code>periodo_carencia</code>) é estável: 0,43 pp em 2025 e 0,46 pp em 2026. Não explica a subida.</li>
+        <li><b>Fusos</b>: 68% dos eventos vêm em UTC (lojas); tudo convertido para BRT.</li>
+      </ul>
+      <h2 style="margin-top:3mm">Qualidade: o que foi corrigido</h2>
+      <ul class="small" style="color:var(--ink)">
+        <li>pagamentos: 12% dos valores no formato "R$ 34,90"</li>
+        <li>usuarios: sexo em 6 grafias, sistema em 5, cidade em 36 grafias para ~13 cidades</li>
+        <li>atividades: tipos em português e inglês (run, walk, strength, ride)</li>
+        <li>onboarding: dias por semana em 23 grafias; 30% de objetivos vazios ("nada", "asdf", emoji)</li>
+        <li>assinaturas: 60 cortesias de canal "interno" excluídas; <code>status_atual</code> é retrato, não histórico</li>
+        <li>chamados: 46% dos chamados de GPS registrados pelo atendente fora de "técnico"</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>Erro aqui contamina todo o resto: a mesma conta dá números diferentes conforme o arquivo e a regra</span><span>1</span></div>
+</section>
+
+<!-- 2 -->
+<section class="slide">
+  <div class="kicker">Objetivo 2 · Explicar a subida de 2026 (diagnóstica)</div>
+  <h1>A subida tem três causas: o preço do mensal, o GPS do Android e as renovações anuais</h1>
+  <table>
+    <tr><th style="width:16%">Hipótese</th><th style="width:29%">Como foi testada</th><th style="width:31%">Evidência</th><th style="width:10%">Veredito</th><th>Ação</th></tr>
+    <tr><td><b>Reajuste do mensal (01/03)</b></td><td>Diferença em diferenças: mensal (tratado) × anual (sem reajuste), set–fev × mar–mai</td><td>Mensal 8,9% → 13,0% ao mês; anual 3,6% → 3,0%. <b>+4,7 pp/mês</b> atribuíveis. Saída em 90 dias dos mensais ativos em 1/mar: 24,5% (2025) → 33,3% (2026)</td><td><span class="tag t-ok">forte</span></td><td>Não reverter o preço; proteger quem usa</td></tr>
+    <tr><td><b>GPS no Android (mai–jun)</b></td><td>Android × iOS por mês; <code>gps_ok</code>; tema dos chamados</td><td>19% dos treinos ao ar livre no Android sem GPS em mai–jun (0% no iOS); 535 e 418 chamados de GPS (zero nos outros meses); churn do Android <b>2,4 pp acima</b> do iOS em jun–jul (0,3 pp antes)</td><td><span class="tag t-ok">forte</span></td><td>Incidente de produto vira alerta de retenção</td></tr>
+    <tr><td><b>Renovações anuais</b></td><td>Anuais que vencem no aniversário; decomposição da subida por plano</td><td>Vencimentos em janeiro: 224 → 670; saída entre eles: 37% → 44%. Churn anual 2,6% → 3,3%: <b>+0,37 pp</b> na média</td><td><span class="tag t-ok">confirmada</span></td><td>Agir antes do vencimento, não depois</td></tr>
+    <tr><td>Falha de pagamento</td><td>Perdas após período de carência, por mês</td><td>0,43 pp (2025) × 0,46 pp (2026)</td><td><span class="tag t-no">descartada</span></td><td>—</td></tr>
+    <tr><td>Perfil da base</td><td>Mix de canal de aquisição, sistema e canal de cobrança, jun/25 × jun/26</td><td>Canais e sistema estáveis; mais anuais (+4 pp), o que reduz o churn (−0,25 pp)</td><td><span class="tag t-no">descartada</span></td><td>—</td></tr>
+    <tr><td>Pesquisa de saída (jun)</td><td>Só registra o motivo de quem cancela no site; não muda o fluxo</td><td>Motivos (n = 643, viés de seleção): preço 41%, outro 35%, não uso 13%</td><td><span class="tag t-mid">só leitura</span></td><td>Não generalizar</td></tr>
+  </table>
+  <div class="card warn" style="margin-top:3mm"><p style="margin:0"><b>Decomposição da alta de +0,99 pp:</b> mensais saindo mais +0,87 · anuais saindo mais +0,37 · mix com mais anuais −0,25. Só o reajuste tem grupo de comparação (os anuais), e mesmo ele é observacional. O GPS e as renovações são associações fortes, não provas de causa.</p></div>
+  <div class="foot"><span>Cruzamento aponta suspeitos, não prova causa</span><span>2</span></div>
+</section>
+
+<!-- 3 -->
+<section class="slide">
+  <div class="kicker">Objetivo 3 · Conhecer os assinantes (clusterização)</div>
+  <h1>Seis grupos que qualquer área entende, e o risco de cada um</h1>
+  <p class="sub">k-means (k = 6) sobre uso, rede, tempo de casa, plano e renovação; variáveis padronizadas e com log nas assimétricas, sem a variável de saída. A silhueta é baixa (0,18): os grupos são faixas de comportamento, não ilhas separadas.</p>
+  <table>
+    <tr><th>Segmento</th><th>Quem é</th><th>n (corte)</th><th>% mensal</th><th>Dias ativos/mês</th><th>Saída em 60 d (ref. 31/07)</th><th>Uso no plano</th></tr>
+    <tr><td><b>Renovação desligada</b></td><td>já decidiram sair; quase todos anuais; uso quase zero</td><td>2.722</td><td>2%</td><td>0,4</td><td><b>22,5%</b></td><td>não contatar por push/e-mail; teste de CS</td></tr>
+    <tr><td><b>Recém-chegados</b></td><td>~1 mês de casa, sem rede</td><td>1.907</td><td>65%</td><td>5,7</td><td>11,4%</td><td>prioridade do desafio e do WhatsApp</td></tr>
+    <tr><td><b>Moderados sem rede</b></td><td>treinam ~4 dias/mês, quase ninguém segue</td><td>2.494</td><td>47%</td><td>3,9</td><td>8,2%</td><td>desafio com convite para grupo</td></tr>
+    <tr><td><b>Moderados conectados</b></td><td>mesmo uso, com seguidores</td><td>3.776</td><td>50%</td><td>3,9</td><td>7,0%</td><td>desafio</td></tr>
+    <tr><td><b>Treinam em grupo</b></td><td>marcam companhia nos treinos</td><td>738</td><td>52%</td><td>7,3</td><td>6,8%</td><td>desafio da turma</td></tr>
+    <tr><td><b>Assíduos</b></td><td>12 dias ativos/mês</td><td>3.116</td><td>50%</td><td>12,5</td><td>5,5%</td><td>garantidos: contato leve</td></tr>
+  </table>
+  <div class="grid g2" style="margin-top:3mm">
+    <div class="card"><p style="margin:0;font-size:9pt"><b>Recorte usado na decisão:</b> plano × uso nos últimos 2 meses × renovação, porque é nele que o sorteio de 10/08 mede o efeito. Os <b>dorminhocos anuais</b> (≤ 1 dia ativo em 2 meses, 904 no corte) estão espalhados entre os grupos.</p></div>
+    <div class="card"><p style="margin:0;font-size:9pt"><b>Sinal de texto:</b> quem posta "meta cumprida" (prova feita, viagem, casamento) é uma das variáveis mais fortes do modelo. Esse é um momento para propor o próximo desafio, não um segmento à parte.</p></div>
+  </div>
+  <div class="foot"><span>Segmentos não usam a informação de quem saiu</span><span>3</span></div>
+</section>
+
+<!-- 4 -->
+<section class="slide">
+  <div class="kicker">Objetivo 4 · Prever quem vai sair (classificação supervisionada)</div>
+  <h1>Os 1.500 do topo da lista concentram 66% das saídas; ao acaso seriam 10%</h1>
+  <div class="grid g2" style="flex:1">
+    <div>
+      <h2>Desenho</h2>
+      <ul>
+        <li><b>Alvo:</b> perda em até 60 dias após a data de referência (no corte, até 29/11/2026).</li>
+        <li><b>Treino:</b> snapshots de 01/03, 01/04, 01/05 e 01/06/2026 (56.569 linhas, 13,4% de saída). <b>Teste fora do tempo:</b> 31/07/2026 (14.049, 10,6%).</li>
+        <li><b>Sem vazamento:</b> variáveis só até a data. <code>status_atual</code>, <code>data_fim</code> e <code>motivo_fim</code> ficam fora.</li>
+        <li><b>Variáveis mais fortes:</b> dias até a próxima cobrança, renovação desligada, tempo de casa, dias desde o último treino, idade e post de "meta cumprida".</li>
+        <li><b>Calibração:</b> no decil de maior risco, o modelo prevê 77% e o observado é 69%. A lista é usada para ordenar; a probabilidade é recalibrada todo mês.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Comparação no teste (31/07, fora do tempo)</h2>
+      <table>
+        <tr><th>Modelo (com texto)</th><th>AUC</th><th>AUC renov. ligada</th><th>Captura top 1.500</th></tr>
+        <tr><td>Regressão logística (referência)</td><td>0,932</td><td>0,846</td><td>65,3%</td></tr>
+        <tr><td>Árvore de decisão (prof. 5)</td><td>0,917</td><td>0,809</td><td>63,0%</td></tr>
+        <tr><td>Random forest (bagging)</td><td><b>0,936</b></td><td><b>0,854</b></td><td><b>66,5%</b></td></tr>
+        <tr><td>Gradient boosting</td><td>0,935</td><td>0,852</td><td>66,1%</td></tr>
+        <tr><td>Ao acaso</td><td>0,500</td><td>0,500</td><td>10,2%</td></tr>
+      </table>
+      <p class="small" style="margin-top:2mm">Os ensembles ganham pouco da logística (+1 pp de captura). O boosting foi usado na lista final por estar empatado e ser mais estável entre referências. "Renovação ligada" é a parte da base em que ainda dá para prevenir.</p>
+      <div class="card" style="margin-top:2mm"><p style="margin:0;font-size:9pt"><b>No corte:</b> risco médio de 19,0% no mensal e 7,1% no anual; 1.794 saídas previstas até 29/11. A versão 1 do plano citava AUC de 0,66–0,70 porque não usava a data da próxima cobrança nem a renovação desligada.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Lista de 30/09 ordenada por risco: outputs/lista_contato_novembro.csv</span><span>4</span></div>
+</section>
+
+<!-- 5 -->
+<section class="slide">
+  <div class="kicker">Objetivo 5 · Medir o valor de texto e imagem</div>
+  <h1>Texto se paga; imagem não acrescenta nada ao modelo</h1>
+  <table>
+    <tr><th>Fonte</th><th>Campos extraídos (esquema fixo)</th><th>Custo por rodada</th><th>Ganho no modelo</th><th>Decisão</th></tr>
+    <tr><td>feed_posts</td><td>meta cumprida (9,6% dos posts), meta futura, mudança de vida, lesão, falha do app, intenção de sair</td><td rowspan="3">R$ 70 (28 mil frases distintas) × R$ 464 (uma vez por linha)</td><td rowspan="3">AUC +0,01 e captura no top 1.500 <b>+3,5 a +4,3 pp</b> nos 4 modelos</td><td><span class="tag t-ok">usar</span></td></tr>
+    <tr><td>tickets_suporte</td><td>tema real (GPS, sincronização, cobrança, cancelar, conta). 46% dos chamados de GPS estavam fora de "técnico"</td><td><span class="tag t-ok">usar</span></td></tr>
+    <tr><td>onboarding</td><td>objetivo (evento com data, saúde, social, estética, vazio), dias por semana</td><td><span class="tag t-ok">usar</span></td></tr>
+    <tr><td>heatmaps (pixels)</td><td>área percorrida, intensidade, % parque/água/praia em volta da rota</td><td>R$ 0</td><td>AUC 0,930 → 0,931; captura 65,4% → 65,0%</td><td><span class="tag t-no">não usar</span></td></tr>
+    <tr><td>heatmaps (LLM visão)</td><td>mesmos campos</td><td>~R$ 47</td><td>não testado: os pixels já mostram que a informação não ajuda</td><td><span class="tag t-no">não usar</span></td></tr>
+  </table>
+  <div class="grid g2" style="margin-top:3mm">
+    <div class="card"><h2>Como se mede</h2><p style="margin:0;font-size:9pt">Mesmo modelo, com e sem as variáveis, na validação temporal. Para imagens, só há mapas em 31/07 e 30/09: o teste foi validação cruzada em 5 partes dentro de 31/07. Ter mapa diminui o risco (9% × 20% de saída), mas isso o uso de treinos já captura.</p></div>
+    <div class="card warn"><h2>Pendente: acerto da extração</h2><p style="margin:0;font-size:9pt">Uma amostra de 200 posts e 100 chamados foi exportada (<code>outputs/amostra_rotulagem.csv</code>) para o grupo rotular à mão. O notebook calcula o acerto quando a coluna estiver preenchida. Os preços de IA são parâmetros: ajustar para o provedor escolhido.</p></div>
+  </div>
+  <div class="foot"><span>Extração com IA generativa conferida contra amostra rotulada (Gilardi et al., 2023)</span><span>5</span></div>
+</section>
+
+<!-- 6 -->
+<section class="slide">
+  <div class="kicker">Objetivo 6 · Decidir quem contatar (uplift, prescritiva)</div>
+  <h1>Risco alto não basta: o contato só compensa para quem muda de ideia por causa dele</h1>
+  <div class="grid g2" style="flex:1">
+    <div>
+      <h2>O sorteio de 10/08 (51 dias até o corte)</h2>
+      <table>
+        <tr><th>Célula · resultado</th><th>Desafio</th><th>Cupom</th><th>Conteúdo</th><th>Controle</th></tr>
+        <tr><td>Todos · saiu</td><td>−1,1 pp</td><td><b>−1,9</b></td><td>−0,7</td><td>9,8%</td></tr>
+        <tr><td>Mensal ativo · saiu</td><td><b>−4,3</b></td><td><b>−5,9</b></td><td><b>−3,0</b></td><td>11,6%</td></tr>
+        <tr><td>Anual ativo · desligou</td><td><b>−3,8</b></td><td>+1,2</td><td>−0,4</td><td>8,3%</td></tr>
+        <tr><td>Anual dorminhoco · desligou</td><td style="color:var(--bad)"><b>+16,5</b></td><td style="color:var(--bad)"><b>+17,9</b></td><td style="color:var(--bad)"><b>+17,7</b></td><td>8,4%</td></tr>
+        <tr><td>Renovação já desligada · saiu</td><td>+3,2</td><td>+2,3</td><td>+3,0</td><td>28,6%</td></tr>
+      </table>
+      <p class="small" style="margin-top:2mm">Em negrito, IC de 95% sem o zero; nas demais células, efeito não significativo. O anual quase não sai em 51 dias, então o efeito nele é medido pelo desligamento da renovação. <b>Contatar o dorminhoco anual triplica o desligamento</b> (8% → 25%): são os que não se deve perturbar.</p>
+    </div>
+    <div>
+      <h2>A regra para novembro</h2>
+      <table>
+        <tr><th>Quem</th><th>Canal</th><th>Mensagem</th><th>Qtd.</th></tr>
+        <tr><td>Mensal ativo</td><td>push + e-mail</td><td>desafio</td><td>5.871</td></tr>
+        <tr><td>Anual ativo</td><td>push + e-mail</td><td>desafio</td><td>5.492</td></tr>
+        <tr><td>Mensal dorminhoco</td><td>push + e-mail</td><td>desafio</td><td>236</td></tr>
+        <tr><td>Top 1.500 de risco entre os contatados (98% mensais)</td><td>+ WhatsApp (teste)</td><td>desafio</td><td>1.500</td></tr>
+        <tr><td>Renovação desligada, maior risco</td><td>CS (teste)</td><td>pausa de 60 dias ou plano</td><td>300</td></tr>
+        <tr><td>Anual dorminhoco + renovação já desligada</td><td>nenhum</td><td>—</td><td>3.154</td></tr>
+      </table>
+      <div class="card hl" style="margin-top:2.5mm"><p style="margin:0;font-size:9pt"><b>Por que o desafio e não o cupom:</b> no mensal ativo, o cupom evita 1,5 pp a mais de saídas, mas custa ~R$ 34 por pessoa contatada contra ~R$ 2,70 de ganho extra. <b>Controle permanente de 10%</b> sorteado antes de cada envio.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Persuadíveis, garantidos, perdidos e não-perturbe (Siegel, 2013) · uplift medido por sorteio</span><span>6</span></div>
+</section>
+
+<!-- 7 -->
+<section class="slide">
+  <div class="kicker">Objetivo 7 · Calcular quanto a ação rende</div>
+  <h1>Cupom perde dinheiro; a regra seletiva rende R$ 93 mil por onda, R$ 49 mil só no mensal</h1>
+  <div class="grid g2">
+    <div>
+      <h2>A conta (só o incremental entra)</h2>
+      <table>
+        <tr><th>Item</th><th>Mensal</th><th>Anual</th></tr>
+        <tr><td>Contatados</td><td>6.107</td><td>5.492</td></tr>
+        <tr><td>Efeito do desafio (sorteio)</td><td>−4,3 pp de saída</td><td>−3,8 pp de desligamento</td></tr>
+        <tr><td>Saídas evitadas por onda</td><td>~260</td><td>~207</td></tr>
+        <tr><td>Valor de cada uma</td><td>margem/mês × 6 (loja: R$ 33,92 − 4,20)</td><td>anuidade líquida − 12 × R$ 4,20 (loja: R$ 204,52)</td></tr>
+        <tr><td><b>Lucro líquido incremental</b></td><td><b>R$ 48,7 mil</b></td><td><b>R$ 44,5 mil</b></td></tr>
+      </table>
+      <h2 style="margin-top:3mm">Custo mensal no orçamento de R$ 40 mil</h2>
+      <table>
+        <tr><td>push + e-mail (11.599 × R$ 0,01)</td><td>R$ 116</td></tr>
+        <tr><td>WhatsApp teste · CS teste</td><td>R$ 600 · R$ 5.400</td></tr>
+        <tr><td>IA: redação (11.599 textos) + extração</td><td>R$ 77 + R$ 70</td></tr>
+        <tr><td><b>Total</b></td><td><b>R$ 6,3 mil (16%)</b> · ~R$ 13 por saída evitada</td></tr>
+      </table>
+    </div>
+    <div>
+      <h2>Alternativas comparadas (por onda)</h2>
+      <table>
+        <tr><th>Estratégia</th><th>Saídas evitadas</th><th>Lucro</th></tr>
+        <tr><td>Não fazer nada</td><td>0</td><td>R$ 0</td></tr>
+        <tr><td>Cupom para todos</td><td>85</td><td style="color:var(--bad)">−R$ 397 mil</td></tr>
+        <tr><td>Cupom para o top 1.500 de risco</td><td>21</td><td style="color:var(--bad)">−R$ 36 mil</td></tr>
+        <tr><td>Desafio para todos</td><td>247</td><td>+R$ 46 mil</td></tr>
+        <tr><td><b>Regra seletiva</b></td><td><b>468</b></td><td style="color:var(--good)"><b>+R$ 93 mil</b></td></tr>
+      </table>
+      <p class="small" style="margin-top:2mm">Deixar quietos os dorminhocos anuais e quem já desligou dobra o lucro em relação a "desafio para todos".</p>
+      <h2 style="margin-top:2mm">Sensibilidade</h2>
+      <table>
+        <tr><th>Meses de margem no mensal</th><th>3</th><th>6</th><th>12</th></tr>
+        <tr><td>Lucro por onda</td><td>R$ 69 mil</td><td>R$ 93 mil</td><td>R$ 142 mil</td></tr>
+      </table>
+      <div class="card warn" style="margin-top:2mm"><p style="margin:0;font-size:9pt"><b>A parte menos certa é o anual:</b> desligamento evitado em 51 dias ainda não é renovação garantida. O cenário conservador conta só o mensal (R$ 49 mil).</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Modelo avaliado pelo lucro, não pela taxa de acerto · valores da seção 03 do enunciado</span><span>7</span></div>
+</section>
+
+<!-- 8 -->
+<section class="slide">
+  <div class="kicker">Objetivo 8 · Escrever a mensagem (IA generativa como redatora)</div>
+  <h1>Cada contatado recebe um texto escrito para ele, dentro de um briefing com limites</h1>
+  <div class="grid g3" style="flex:1">
+    <div class="card">
+      <h2>Entrada do redator (JSON)</h2>
+      <ul style="font-size:9pt">
+        <li>segmento e ação definidos pela regra; <b>o LLM não escolhe a oferta</b></li>
+        <li>o que a extração encontrou: objetivo do onboarding, "meta cumprida" recente, falha de GPS, se treina junto</li>
+        <li>uso recente: dias ativos no último mês</li>
+        <li>canal e limite (push 90, e-mail 50 + 400, WhatsApp 300 caracteres)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Briefing (regras)</h2>
+      <ul style="font-size:9pt">
+        <li>tom: parceiro de treino, direto, sem culpa</li>
+        <li>só a oferta informada, com o valor exato</li>
+        <li><b>nunca</b> lembrar quanto a pessoa paga, falar em cancelamento ou renovação, nem citar peso, doença ou endereço</li>
+        <li>falha de GPS: reconhecer antes de convidar</li>
+        <li>um único convite, que abre o desafio no app</li>
+      </ul>
+    </div>
+    <div class="card hl">
+      <h2>Exemplos</h2>
+      <div class="quote"><b>Meta cumprida · push</b><br>Você fechou os 10 km. Próximo passo: 6 semanas rumo aos 15. Bora?</div>
+      <div class="quote"><b>Recém-chegado sem rede · e-mail</b><br>Tem gente treinando perto de você toda semana. Entre no desafio da turma e treine junto já neste sábado.</div>
+      <p class="small" style="margin:0">Custo: ~R$ 77 por rodada de 11.599 textos. Revisão: 50 textos por lote lidos por uma pessoa e filtro automático de termos proibidos.</p>
+    </div>
+  </div>
+  <div class="foot"><span>Briefing e montagem do prompt na seção 8 do notebook</span><span>8</span></div>
+</section>
+
+<!-- 9 -->
+<section class="slide">
+  <div class="kicker">Plano de ação, metas e riscos</div>
+  <h1>Em 10 semanas, medir o ganho contra um grupo que não recebe nada e decidir</h1>
+  <div class="grid g2">
+    <div>
+      <h2>Marcos (a partir de 09/11)</h2>
+      <table>
+        <tr><td style="width:24%"><b>Sem. 1</b></td><td>sortear o controle de 10%; disparar a lista de novembro (o horizonte de 60 dias já está correndo)</td></tr>
+        <tr><td><b>Sem. 1–3</b></td><td>alerta de GPS: se a falha voltar, suspender o contato com os afetados e avisar primeiro</td></tr>
+        <tr><td><b>Sem. 4–5</b></td><td>retreinar com outubro, recalibrar e gerar a lista de dezembro</td></tr>
+        <tr><td><b>Sem. 9</b></td><td>ler os testes de WhatsApp e CS e o ganho contra o controle</td></tr>
+        <tr><td><b>Sem. 10</b></td><td>Conselho decide: escalar, ajustar ou parar</td></tr>
+      </table>
+      <h2 style="margin-top:3mm">Indicadores</h2>
+      <table>
+        <tr><th>Indicador</th><th>Hoje</th><th>Meta</th></tr>
+        <tr><td>Churn mensal</td><td>6,6%</td><td>≤ 5,5% em dezembro</td></tr>
+        <tr><td>Saídas evitadas por onda (× controle)</td><td>—</td><td>≥ 260 no mensal</td></tr>
+        <tr><td>Custo por saída evitada</td><td>—</td><td>≤ R$ 16</td></tr>
+        <tr><td>Captura no top 1.500</td><td>66%</td><td>≥ 60% após retreino</td></tr>
+        <tr><td>Desligamento dos dorminhocos anuais</td><td>8%</td><td>não subir (não contatados)</td></tr>
+      </table>
+    </div>
+    <div>
+      <h2>Riscos</h2>
+      <table>
+        <tr><th>Risco</th><th>Gatilho</th><th>Resposta</th></tr>
+        <tr><td>Efeito cai com a repetição</td><td>ganho &lt; metade do previsto por 2 ondas</td><td>alternar a mensagem ou pausar a célula</td></tr>
+        <tr><td>Anual não converte em renovação</td><td>renovação dos contatados = controle</td><td>tirar o anual da conta e da regra</td></tr>
+        <tr><td>Nova falha no app</td><td>chamados de GPS &gt; 50 por semana</td><td>suspender contato com os afetados</td></tr>
+        <tr><td>WhatsApp ou CS sem efeito</td><td>IC inclui zero no fim do teste</td><td>encerrar o canal</td></tr>
+        <tr><td>Modelo perde força</td><td>captura no top 1.500 &lt; 50%</td><td>retreinar; voltar à regra por célula</td></tr>
+      </table>
+      <div class="card hl" style="margin-top:3mm"><p style="margin:0;font-size:9pt"><b>Cenário conservador:</b> só o mensal, 3 meses de margem e efeito no limite inferior do IC (−2,1 pp): ainda rende ~R$ 12 mil por onda, quase o dobro do custo total.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Saídas evitadas e custo sempre medidos contra o grupo controle permanente</span><span>9</span></div>
+</section>
+
+<!-- 10 -->
+<section class="slide">
+  <div class="kicker">Anexo · O que os dados confirmaram e corrigiram na versão 1</div>
+  <h1>Revisão: cobertura dos 8 objetivos e onde os números mudaram</h1>
+  <div class="grid g2">
+    <div>
+      <table>
+        <tr><th>Afirmação da v1</th><th>O data room mostra</th></tr>
+        <tr><td>Vencimentos anuais em janeiro 224 → 670</td><td><span class="tag t-ok">confirmado</span> 224 → 670</td></tr>
+        <tr><td>Reajuste ≈ +5 pp em 90 dias</td><td><span class="tag t-mid">maior</span> +8,8 pp em 90 dias; +4,7 pp/mês na DiD</td></tr>
+        <tr><td>Android 2,4 pp acima do iOS</td><td><span class="tag t-ok">confirmado</span> 2,4 pp em jun–jul</td></tr>
+        <tr><td>Chamados técnicos 15× o normal</td><td><span class="tag t-mid">reformulado</span> 535 e 418 de GPS em mai–jun, zero nos outros meses</td></tr>
+        <tr><td>Falha de pagamento estável (0,44 pp)</td><td><span class="tag t-ok">confirmado</span> 0,43 → 0,46 pp</td></tr>
+        <tr><td>AUC 0,66–0,70; captura 30%</td><td><span class="tag t-mid">melhor</span> AUC 0,94; captura 66%</td></tr>
+        <tr><td>Dorminhoco anual: 11,5% → 34,6%</td><td><span class="tag t-ok">mesma direção</span> desligamento 8% → 25%</td></tr>
+        <tr><td>7.043 contatados; 447 saídas; R$ 84 mil</td><td><span class="tag t-mid">revisto</span> 11.599; 468; R$ 93 mil (R$ 49 mil só mensal)</td></tr>
+        <tr><td>~1.650 saídas em risco em 60 dias</td><td><span class="tag t-mid">revisto</span> 1.794 previstas até 29/11</td></tr>
+      </table>
+    </div>
+    <div>
+      <h2>Ainda em aberto</h2>
+      <ul style="font-size:9.5pt">
+        <li>Rotular à mão a amostra de 300 textos e medir o acerto da extração.</li>
+        <li>Escolher o provedor de IA e trocar os preços de exemplo no notebook (custo hoje estimado em ~R$ 150 por rodada).</li>
+        <li>Efeito de WhatsApp e CS: só depois do teste de novembro.</li>
+        <li>Confirmar no vencimento se o desligamento evitado no anual vira renovação.</li>
+        <li>Os grupos do k-means são pouco separados (silhueta 0,18). A regra usa as células medidas no sorteio.</li>
+      </ul>
+      <h2 style="margin-top:3mm">Arquivos</h2>
+      <ul style="font-size:9pt">
+        <li><code>vitaliza_dataroom/Vitaliza_analise.ipynb</code>: todas as contas</li>
+        <li><code>outputs/lista_contato_novembro.csv</code>: risco e ação por assinante</li>
+        <li><code>outputs/resultados.json</code>: números usados nestes slides</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>Vitaliza · Plano de Inteligência de Retenção · v2</span><span>Anexo</span></div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="416.16pt" height="67.068pt" viewBox="0 0 416.16 67.068" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-07T09:45:42.519353</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 67.068 
+L 416.16 67.068 
+L 416.16 0 
+L 0 0 
+L 0 67.068 
+z
+" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 7.744649 57.474 
+L 172.963785 57.474 
+L 172.963785 9.594 
+L 7.744649 9.594 
+z
+" clip-path="url(#p9a88bedb07)" style="fill: #2a78d6"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 174.053082 57.474 
+L 322.524276 57.474 
+L 322.524276 9.594 
+L 174.053082 9.594 
+z
+" clip-path="url(#p9a88bedb07)" style="fill: #eb6834"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 323.613573 57.474 
+L 408.415351 57.474 
+L 408.415351 9.594 
+L 323.613573 9.594 
+z
+" clip-path="url(#p9a88bedb07)" style="fill: #c3c2b7"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial'; fill: #ffffff" transform="translate(60.717967 31.718)">Desafio · mensal</text>
+    <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial'; fill: #ffffff" transform="translate(80.347342 41.262)">6.107</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial'; fill: #ffffff" transform="translate(221.840554 31.718)">Desafio · anual</text>
+    <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial'; fill: #ffffff" transform="translate(238.281804 41.262)">5.492</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial'; fill: #0b0b0b" transform="translate(328.373837 31.718)">Quietos de propósito</text>
+    <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial'; fill: #0b0b0b" transform="translate(356.007587 41.262)">3.154</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p9a88bedb07">
+   <rect x="7.2" y="7.2" width="401.76" height="52.668"/>
+  </clipPath>
+ </defs>
+</svg>

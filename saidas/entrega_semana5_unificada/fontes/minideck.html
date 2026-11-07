@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Vitaliza · Mini deck EDA</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  @page { size: 297mm 167mm; margin: 0; }
+  .slide { width: 297mm; height: 167mm; padding: 10mm 13mm 9mm; page-break-after: always; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+  .slide:last-child { page-break-after: auto; }
+  .eyebrow { font-size: 7.5pt; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 1.5mm; }
+  h1 { font-size: 20pt; line-height: 1.12; letter-spacing: -.01em; margin-bottom: 1.5mm; }
+  .sub { font-size: 9.5pt; color: var(--ink2); margin-bottom: 3mm; }
+  .body { flex: 1; display: grid; grid-template-columns: 1fr 64mm; gap: 6mm; min-height: 0; align-items: stretch; margin-bottom: 5mm; }
+  .side { justify-content: center; }
+  .chart { display: flex; align-items: center; justify-content: center; min-height: 0; height: 100%; }
+  .chart img { width: 100%; height: 100%; object-fit: contain; }
+  .side { display: flex; flex-direction: column; gap: 3mm; }
+  .stat { border-radius: 2mm; padding: 3mm 3.5mm; background: var(--ctx-bg); }
+  .stat b { display: block; font-size: 19pt; line-height: 1.05; margin-bottom: 1mm; }
+  .stat span { font-size: 8.5pt; color: var(--ink2); line-height: 1.35; display: block; }
+  .stat.crit b { color: var(--crit); } .stat.good b { color: var(--good); } .stat.warn b { color: var(--warn); }
+  .foot { position: absolute; left: 13mm; right: 13mm; bottom: 4mm; font-size: 7pt; color: var(--muted); display: flex; justify-content: space-between; border-top: 1px solid var(--line); padding-top: 1.2mm; }
+</style>
+</head>
+<body>
+
+<section class="slide">
+  <div class="eyebrow">Vitaliza · EDA e segmentação · mini deck analítico · semana 5 · Grupo 11</div>
+  <h1>O churn subiu um ponto, e quase tudo veio do plano mensal</h1>
+  <p class="sub">De onde vem o aumento do churn médio de 2025 para 2026, em pontos percentuais. A base reconstruída reproduz os números oficiais da empresa.</p>
+  <div class="body">
+    <div class="chart"><img src="../../graficos_unificados/02_decomposicao.svg"></div>
+    <div class="side">
+      <div class="stat crit"><b>+4,7 pp</b><span>de saída por mês no mensal após o reajuste de março, contra o anual (diferença em diferenças)</span></div>
+      <div class="stat crit"><b>+2,4 pp</b><span>de churn no Android em jun–jul, com o GPS falhando em 19% dos treinos ao ar livre</span></div>
+      <div class="stat"><b>14.753</b><span>ativos em 30/09: igual ao enunciado, assim como o churn de 5,6% e 6,6%</span></div>
+    </div>
+  </div>
+  <div class="foot"><span>Vitaliza · Grupo 11 · EDA e segmentação (semana 5) · churn mensal jan/2025–set/2026</span><span>1</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">O que separa quem sai</div>
+  <h1>Renovação desligada e uso separam quem sai; idade e sexo não</h1>
+  <p class="sub">Quanto cada variável, sozinha, separa quem saiu em 60 dias (AUC; 0,50 = acaso). Base: 14.032 assinantes ativos em 31/07/2026.</p>
+  <div class="body">
+    <div class="chart"><img src="../../graficos_unificados/06_auc_variaveis.svg"></div>
+    <div class="side">
+      <div class="stat crit"><b>0,69</b><span>renovação desligada: 32,3% de churn e 52% das saídas. É decisão já tomada: serve para priorizar</span></div>
+      <div class="stat"><b>0,62–0,67</b><span>uso: quem não treinou sai 22,0%, contra 6,4% de quem treina 8 ou mais vezes por mês</span></div>
+      <div class="stat"><b>0,50</b><span>idade e sexo não separam e não seriam gatilho (LGPD): ficam fora do modelo</span></div>
+    </div>
+  </div>
+  <div class="foot"><span>Vitaliza · Grupo 11 · EDA e segmentação (semana 5) · base: 14.032 assinantes de 31/07/2026</span><span>2</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Quando sai</div>
+  <h1>O mensal sai cedo; o anual sai na renovação</h1>
+  <p class="sub">Saída em 60 dias por plano e tempo de casa. A linha tracejada é a média da base (10,5%).</p>
+  <div class="body">
+    <div class="chart"><img src="../../graficos_unificados/04_plano_tempo_casa.svg"></div>
+    <div class="side">
+      <div class="stat crit"><b>45,3%</b><span>de churn no anual que renova nos próximos 60 dias; nos demais meses do ciclo, 0,1%</span></div>
+      <div class="stat crit"><b>18–19%</b><span>de churn no mensal com até 5 meses, contra 5% com 24 meses ou mais</span></div>
+    </div>
+  </div>
+  <div class="foot"><span>Vitaliza · Grupo 11 · EDA e segmentação (semana 5) · base: 14.032 assinantes de 31/07/2026</span><span>3</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Segmentação</div>
+  <h1>Quatro segmentos de momento explicam o churn</h1>
+  <p class="sub">Regras de momento (plano × renovação × tempo de casa) separam muito mais que o k-means sozinho: AUC 0,85, e 0,87 com a camada de comportamento.</p>
+  <div class="body">
+    <div class="chart"><img src="../../graficos_unificados/07_segmentos.svg"></div>
+    <div class="side">
+      <div class="stat"><b>A · B · C · D</b><span>anual na renovação · mensal novato · mensal veterano · anual longe da renovação</span></div>
+      <div class="stat crit"><b>68%</b><span>saem no A com pouco uso; 18% no A ativo</span></div>
+      <div class="stat crit"><b>49%</b><span>saem no B depois de postar "meta cumprida", contra 16%</span></div>
+    </div>
+  </div>
+  <div class="foot"><span>Vitaliza · Grupo 11 · EDA e segmentação (semana 5) · base: 14.032 assinantes de 31/07/2026</span><span>4</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Onde agir</div>
+  <h1>Agir já no B e no A ativo; no C, no gatilho; o anual com pouco uso, não contatar</h1>
+  <p class="sub">Valor (R$ líquidos por mês) × risco (saída em 60 dias) por segmento e camada.</p>
+  <div class="body">
+    <div class="chart"><img src="../../graficos_unificados/11_valor_risco.svg"></div>
+    <div class="side">
+      <div class="stat good"><b>−6,6 pp</b><span>de saída no B com o cupom de agosto, e −4,4 pp com o desafio (sorteio contra controle)</span></div>
+      <div class="stat crit"><b>+5,9 pp</b><span>de desligamento da renovação quando o anual com pouco uso foi contatado: não contatar</span></div>
+      <div class="stat warn"><b>Limites</b><span>associação não é causa; a campanha cai dentro da janela; segmentos de momento mudam todo mês</span></div>
+    </div>
+  </div>
+  <div class="foot"><span>Vitaliza · Grupo 11 · EDA e segmentação (semana 5) · base: 14.032 assinantes de 31/07/2026</span><span>5</span></div>
+</section>
+
+</body>
+</html>

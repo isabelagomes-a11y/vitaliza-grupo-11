@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Vitaliza · Análise detalhada</title>
+<style>
+  @page { size: A4; margin: 16mm 17mm 16mm; }
+  :root {
+    --ink: #0b0b0b; --ink2: #52514e; --muted: #898781; --line: #e1e0d9; --axis: #c3c2b7; --page: #ffffff;
+    --crit: #d03b3b; --crit-bg: #fbecec; --good: #0a8a0a; --good-bg: #e9f6e9; --warn: #a86b00; --warn-bg: #fdf4e1;
+    --ctx-bg: #f4f3ef; --mensal: #2a78d6; --anual: #eb6834; --accent: #1c5cab;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; color: var(--ink); background: var(--page); font-size: 9.4pt; line-height: 1.45; }
+  h1 { font-size: 24pt; line-height: 1.1; margin: 0 0 3mm; letter-spacing: -.01em; }
+  h2 { font-size: 15pt; margin: 0 0 1mm; line-height: 1.2; }
+  h3 { font-size: 10.5pt; margin: 4mm 0 1.5mm; }
+  p { margin: 0 0 2.5mm; }
+  .page-break { margin-top: 9mm; }
+  .page-break.hard { page-break-before: always; margin-top: 0; }
+  h2, h3, .q, .eyebrow, .trail, figcaption { break-after: avoid; page-break-after: avoid; }
+  table, .grid2, .grid3, .chain { break-inside: avoid; }
+  .lead { font-size: 11.5pt; color: var(--ink2); margin-bottom: 5mm; }
+  .eyebrow { font-size: 8pt; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 1.5mm; }
+  .small { font-size: 8.5pt; color: var(--ink2); }
+  .src { font-size: 7.5pt; color: var(--muted); margin-top: 1mm; }
+  figure { margin: 2mm 0 3mm; break-inside: avoid; }
+  figure img { width: 100%; display: block; }
+  figcaption { font-size: 9pt; color: var(--ink); margin-bottom: 1.5mm; font-weight: 600; }
+  figcaption span { font-weight: 400; color: var(--ink2); }
+  table { width: 100%; border-collapse: collapse; font-size: 8.8pt; margin: 2mm 0 3mm; break-inside: avoid; }
+  th { text-align: left; font-size: 7.5pt; text-transform: uppercase; letter-spacing: .05em; color: var(--ink2); border-bottom: 1.5px solid var(--ink); padding: 1.3mm 1.6mm; }
+  td { border-bottom: 1px solid var(--line); padding: 1.4mm 1.6mm; vertical-align: top; }
+  td.n { text-align: right; font-variant-numeric: tabular-nums; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; }
+
+  /* semiótica: cada cor tem um papel, sempre com ícone + palavra */
+  .sig { display: inline-flex; align-items: center; gap: 1.2mm; font-size: 7.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; padding: .4mm 2mm; border-radius: 1mm; }
+  .sig i { font-style: normal; font-size: 8.5pt; }
+  .sig.crit { color: var(--crit); background: var(--crit-bg); }
+  .sig.good { color: var(--good); background: var(--good-bg); }
+  .sig.warn { color: var(--warn); background: var(--warn-bg); }
+  .sig.ctx { color: var(--ink2); background: var(--ctx-bg); }
+  .dot { display: inline-block; width: 2.6mm; height: 2.6mm; border-radius: 50%; vertical-align: -.3mm; margin-right: 1mm; }
+
+  .box { border-radius: 2mm; padding: 2.5mm 3.5mm; margin: 2.5mm 0 3mm; break-inside: avoid; border-left: 3px solid; }
+  .box.concl { background: var(--good-bg); border-color: var(--good); }
+  .box.crit { background: var(--crit-bg); border-color: var(--crit); }
+  .box.warn { background: var(--warn-bg); border-color: #e0a100; }
+  .box.ctx { background: var(--ctx-bg); border-color: var(--axis); }
+  .box h4 { margin: 0 0 1mm; font-size: 9.5pt; display: flex; align-items: center; gap: 2mm; }
+  .box p:last-child, .box ul:last-child { margin-bottom: 0; }
+  ul { margin: 0 0 2.5mm; padding-left: 5mm; } li { margin-bottom: .8mm; }
+
+  /* trilha: onde estamos no raciocínio */
+  .trail { display: flex; gap: 1mm; margin: 0 0 4mm; }
+  .trail span { flex: 1; font-size: 6.8pt; text-align: center; padding: 1mm 0; border-radius: 1mm; background: var(--ctx-bg); color: var(--muted); }
+  .trail span.on { background: var(--ink); color: #fff; font-weight: 700; }
+  .trail span.done { background: #d9d8d2; color: var(--ink2); }
+
+  .q { font-size: 11pt; font-weight: 600; margin: 0 0 3mm; padding-left: 3mm; border-left: 3px solid var(--accent); }
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; margin: 4mm 0; }
+  .kpi { border: 1px solid var(--line); border-radius: 2mm; padding: 3mm; }
+  .kpi b { display: block; font-size: 18pt; line-height: 1.05; margin-bottom: 1mm; }
+  .kpi span { font-size: 8pt; color: var(--ink2); }
+  .kpi.crit b { color: var(--crit); } .kpi.good b { color: var(--good); }
+  .chain { display: flex; align-items: stretch; gap: 0; margin: 3mm 0 4mm; }
+  .chain div { flex: 1; padding: 2.5mm 3mm; background: var(--ctx-bg); font-size: 8.5pt; position: relative; }
+  .chain div + div { margin-left: 4mm; }
+  .chain div + div::before { content: "→"; position: absolute; left: -3.6mm; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 10pt; }
+  .chain b { display: block; font-size: 9pt; }
+  code { font-family: "SF Mono", Menlo, monospace; font-size: 8pt; background: var(--ctx-bg); padding: 0 1mm; border-radius: .8mm; }
+  .tech { display: flex; flex-wrap: wrap; gap: 1.2mm; align-items: center; margin: -1mm 0 3mm; font-size: 7.5pt; }
+  .tech > b { font-size: 7pt; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); margin-right: 1mm; }
+  .tech span { border: 1px solid #b9cdea; color: var(--accent); background: #f2f6fc; border-radius: 1mm; padding: .2mm 1.6mm; }
+  .cover { height: 255mm; display: flex; flex-direction: column; }
+  .legend-grid { display: grid; grid-template-columns: auto 1fr; gap: 2mm 4mm; align-items: center; font-size: 9pt; }
+</style>
+</head>
+<body>
+
+<!-- ============ CAPA ============ -->
+<section class="cover">
+  <div class="eyebrow">Vitaliza · Business case · Módulo 2</div>
+  <h1>Análise detalhada da retenção</h1>
+  <p class="lead">Como saímos de "o churn subiu e ninguém sabe por quê" para uma regra que diz quem contatar, com qual mensagem, e quanto isso rende. Cada conclusão é construída a partir da anterior.</p>
+
+  <div class="kpis">
+    <div class="kpi crit"><b>6,6%</b><span>churn mensal em 2026, contra 5,6% em 2025</span></div>
+    <div class="kpi"><b>3</b><span>causas da subida: preço do mensal, GPS do Android e renovações anuais</span></div>
+    <div class="kpi"><b>66%</b><span>das saídas estão entre os 1.500 de maior risco (10% da base)</span></div>
+    <div class="kpi good"><b>R$ 93 mil</b><span>de lucro incremental por onda de contato, contra não fazer nada</span></div>
+  </div>
+
+  <h3>O caminho do raciocínio</h3>
+  <table>
+    <tr><th style="width:6%">#</th><th style="width:30%">Pergunta</th><th>Resposta curta</th></tr>
+    <tr><td>1</td><td>Os números da empresa batem?</td><td>Sim. A reconstrução pelos eventos reproduz todos os números do enunciado.</td></tr>
+    <tr><td>2</td><td>Por que o churn subiu?</td><td>Reajuste do mensal, falha de GPS no Android e renovações anuais chegando.</td></tr>
+    <tr><td>3</td><td>Quem são os assinantes?</td><td>Seis grupos; quem já desligou a renovação concentra o risco.</td></tr>
+    <tr><td>4</td><td>Dá para prever quem sai?</td><td>Sim: 10% da base contém 66% das saídas.</td></tr>
+    <tr><td>5</td><td>Texto e imagem ajudam?</td><td>Texto sim (+3,5 pp, por R$ 70). Imagem não.</td></tr>
+    <tr><td>6</td><td>Contatar funciona?</td><td>Depende de quem: ajuda o mensal ativo, piora o anual que não usa.</td></tr>
+    <tr><td>7</td><td>Quanto rende?</td><td>R$ 93 mil por onda; o cupom em massa perde R$ 397 mil.</td></tr>
+    <tr><td>8</td><td>O que dizer?</td><td>Texto escrito por IA, a partir de um briefing com limites.</td></tr>
+    <tr><td>+</td><td>Em que isso se apoia?</td><td>Apêndice: as técnicas e os conceitos teóricos de cada etapa.</td></tr>
+  </table>
+
+  <div style="margin-top:auto">
+    <h3>Como ler este documento</h3>
+    <div class="legend-grid">
+      <span class="sig crit"><i>▲</i> problema</span><span>vermelho marca perda, piora ou risco. Nos gráficos, a barra ou o ponto que precisa de atenção.</span>
+      <span class="sig good"><i>●</i> conclusão</span><span>verde marca ganho, efeito que funciona e cada conclusão que sustenta a próxima etapa.</span>
+      <span class="sig warn"><i>◆</i> atenção</span><span>âmbar marca incerteza: o que ainda depende de teste ou de confirmação.</span>
+      <span class="sig ctx"><i>■</i> contexto</span><span>cinza é referência: o passado, o controle, o que não mudou.</span>
+      <span class="tech" style="margin:0"><span>técnica</span></span><span>etiquetas azuis no início de cada etapa: o método usado ali, detalhado no apêndice.</span>
+      <span><span class="dot" style="background:var(--mensal)"></span><span class="dot" style="background:var(--anual)"></span></span><span><b style="color:var(--mensal)">azul = plano mensal</b>, <b style="color:var(--anual)">laranja = plano anual</b>, em todos os gráficos.</span>
+    </div>
+    <p class="src" style="margin-top:4mm">Fonte: data room Vitaliza, exportado em 01/10/2026 com corte em 30/09/2026. Todas as contas estão em <code>vitaliza_dataroom/Vitaliza_analise.ipynb</code>.</p>
+  </div>
+</section>
+
+<!-- ============ 0 · A PERGUNTA ============ -->
+<section class="page-break hard">
+  <div class="eyebrow">Ponto de partida</div>
+  <h2>O que a empresa não sabe, e por que isso custa caro</h2>
+  <p>A Vitaliza tem 14.753 assinantes pagantes e perde, em média, 6,6% deles por mês. Repor um assinante custa R$ 118 de aquisição, o equivalente a três mensalidades e meia de receita líquida. Com menos gente nova chegando ao mercado de apps de treino, o crescimento depende de manter quem já paga.</p>
+  <p>O enunciado aponta quatro lacunas. A análise responde a cada uma, nesta ordem:</p>
+  <div class="grid2">
+    <div class="box crit"><h4><span class="sig crit"><i>▲</i> lacuna 1</span></h4><p>Ninguém sabe explicar por que o churn subiu em 2026. Há três suspeitos (reajuste, pesquisa de saída, campanha) e nenhum foi testado.</p></div>
+    <div class="box crit"><h4><span class="sig crit"><i>▲</i> lacuna 2</span></h4><p>70% dos assinantes cancelam pela loja do celular, fora do app. A empresa só vê "renovação desligada" e "expirou", sem o motivo.</p></div>
+    <div class="box crit"><h4><span class="sig crit"><i>▲</i> lacuna 3</span></h4><p>A campanha de 10/08 foi um sorteio com grupo de controle, o único experimento da base, e o resultado nunca foi analisado.</p></div>
+    <div class="box crit"><h4><span class="sig crit"><i>▲</i> lacuna 4</span></h4><p>O CRM tem teto: 1.500 WhatsApps e 300 atendimentos por mês. Escolher quem recebe o contato não é opcional.</p></div>
+  </div>
+  <h3>A lógica da solução</h3>
+  <p>As respostas se encadeiam. Sem um número confiável de ativos não há churn; sem churn não há diagnóstico; sem diagnóstico, o modelo prevê sem explicar; sem o sorteio de agosto, não se sabe se contatar ajuda; e sem saber se ajuda, não há como calcular o retorno.</p>
+  <div class="chain">
+    <div><b>Medir</b>reconstruir quem estava ativo em cada data</div>
+    <div><b>Explicar</b>testar cada suspeito contra um grupo de comparação</div>
+    <div><b>Prever</b>ordenar a base pelo risco de sair em 60 dias</div>
+    <div><b>Decidir</b>contatar só onde o sorteio mostrou efeito</div>
+    <div><b>Calcular</b>contar só a receita que o contato criou</div>
+  </div>
+  <div class="box ctx"><h4><span class="sig ctx"><i>■</i> premissas de negócio usadas</span></h4>
+    <p class="small" style="color:var(--ink)">Mensal R$ 39,90 (R$ 34,90 até 28/02/2026) · anual R$ 299,90 · taxa de 15% nas lojas, 3,5% no cartão, 0,99% no Pix · custo de servir R$ 4,20 por mês · CAC R$ 118 · e-mail R$ 0,01, WhatsApp R$ 0,40, CS R$ 18 por contato · orçamento de CRM de R$ 40 mil por mês, incluindo descontos e IA.</p>
+  </div>
+</section>
+
+<!-- ============ 1 · MEDIR ============ -->
+<section class="page-break">
+  <div class="trail"><span class="on">1 Medir</span><span>2 Explicar</span><span>3 Grupos</span><span>4 Prever</span><span>5 Texto e imagem</span><span>6 Campanha</span><span>7 Retorno</span><span>8 Mensagem</span></div>
+  <div class="eyebrow">Etapa 1 · Análise descritiva</div>
+  <h2>Antes de explicar o churn, é preciso contá-lo do jeito certo</h2>
+  <p class="q">Quantos assinantes a Vitaliza tinha, e quantos perde por mês?</p>
+  <div class="tech"><b>Técnicas</b><span>CRISP-DM</span><span>reconstrução de estado a partir de log de eventos</span><span>população em risco</span><span>qualidade de dados</span><span>normalização de fuso (UTC → BRT)</span></div>
+  <p>A pergunta parece simples, mas o arquivo óbvio dá a resposta errada. <code>assinaturas.csv</code> é um retrato de 01/10/2026: cada vez que uma assinatura muda, o campo é sobrescrito. Ele diz como cada assinatura estava no fim, não como estava em março. A situação em qualquer data passada só sai do histórico de eventos.</p>
+
+  <h3>A regra adotada</h3>
+  <ul>
+    <li><b>Ativo numa data</b> = tem um período pagante aberto. O período começa em <code>assinatura_iniciada</code> e termina em <code>assinatura_expirada</code> ou <code>reembolso</code>.</li>
+    <li><b>Quem desligou a renovação continua ativo</b> até o fim do período já pago, como manda a regra das lojas.</li>
+    <li><b>Assinaturas anteriores a 07/2024</b> (quando o log começa) entram como ativas no início do log, se ainda não tinham terminado.</li>
+    <li><b>Fuso:</b> 68% dos eventos vêm das lojas em UTC; o resto, do site, em horário de Brasília. Tudo foi convertido para Brasília antes de cortar por mês.</li>
+  </ul>
+
+  <h3>O teste da regra: ela reproduz os números da empresa?</h3>
+  <table>
+    <tr><th>Medida</th><th class="n">Enunciado</th><th class="n">Reconstruído</th><th></th></tr>
+    <tr><td>Ativos em 30/09/2026</td><td class="n">14.753</td><td class="n"><b>14.753</b></td><td><span class="sig good"><i>●</i> igual</span></td></tr>
+    <tr><td>Ativos no início de janeiro/2025</td><td class="n">8.540</td><td class="n"><b>8.540</b></td><td><span class="sig good"><i>●</i> igual</span></td></tr>
+    <tr><td>Abril/2026: perdas sobre ativos</td><td class="n">1.154 / 14.237</td><td class="n"><b>1.154 / 14.237</b></td><td><span class="sig good"><i>●</i> igual</span></td></tr>
+    <tr><td>Ativos no início de setembro/2026</td><td class="n">14.319</td><td class="n"><b>14.319</b></td><td><span class="sig good"><i>●</i> igual</span></td></tr>
+    <tr><td>Churn médio 2025 · jan–set/2026</td><td class="n">5,6% · 6,6%</td><td class="n"><b>5,6% · 6,6%</b></td><td><span class="sig good"><i>●</i> igual</span></td></tr>
+  </table>
+
+  <figure>
+    <figcaption>Churn mensal, jan/2025 a set/2026 <span>· perdas no mês ÷ ativos no início do mês. Cinza = 2025, escuro = 2026, vermelho = pior mês.</span></figcaption>
+    <img src="charts/01_churn_mensal.svg" style="width:88%">
+  </figure>
+
+  <h3>O que foi limpo nos dados</h3>
+  <table>
+    <tr><th>Arquivo</th><th>Problema</th><th>Tratamento</th></tr>
+    <tr><td>pagamentos</td><td>12% dos valores no formato "R$ 34,90"; o resto como "34.90"</td><td>convertido para número</td></tr>
+    <tr><td>usuarios</td><td>sexo em 6 grafias, sistema em 5 (ios, iOS, IOS), cidade em 36 grafias para ~13 cidades</td><td>normalizado; cidade substituída por UF</td></tr>
+    <tr><td>atividades</td><td>tipo de treino em português e inglês (run, walk, strength, ride)</td><td>unificado em português</td></tr>
+    <tr><td>onboarding</td><td>dias por semana em 23 grafias ("3x", "3 vezes", "todos"); 30% de objetivos vazios ("nada", "asdf", emoji)</td><td>número extraído; categoria "vazio"</td></tr>
+    <tr><td>assinaturas</td><td>60 cortesias com canal "interno"</td><td>fora da base pagante</td></tr>
+  </table>
+
+  <div class="box concl"><h4><span class="sig good"><i>●</i> conclusão 1</span></h4>
+    <p>A base está medida e confere com a empresa. O churn subiu um ponto, de 5,6% para 6,6%, com pico de 8,1% em abril, logo depois do reajuste. A falha de pagamento (churn involuntário) ficou estável, 0,43 pp em 2025 e 0,46 pp em 2026. <b>A subida é de gente que decide sair.</b></p>
+  </div>
+</section>
+
+<!-- ============ 2 · EXPLICAR ============ -->
+<section class="page-break">
+  <div class="trail"><span class="done">1 Medir</span><span class="on">2 Explicar</span><span>3 Grupos</span><span>4 Prever</span><span>5 Texto e imagem</span><span>6 Campanha</span><span>7 Retorno</span><span>8 Mensagem</span></div>
+  <div class="eyebrow">Etapa 2 · Análise diagnóstica</div>
+  <h2>A subida tem três causas, e elas pesam de forma diferente</h2>
+  <p class="q">O que mudou entre 2025 e 2026, e para quem?</p>
+  <div class="tech"><b>Técnicas</b><span>decomposição taxa × mix</span><span>diferença em diferenças</span><span>triangulação de fontes</span><span>viés de seleção</span></div>
+  <p>O primeiro passo é separar o churn por plano. O mensal e o anual se comportam de forma muito diferente: o mensal perde gente todo mês; o anual só perde na renovação. Se a base muda de composição, a média muda mesmo sem ninguém mudar de comportamento.</p>
+
+  <figure>
+    <figcaption>De onde vem o ponto a mais de churn <span>· contribuição de cada efeito, em pontos percentuais. Vermelho empurra para cima, verde para baixo.</span></figcaption>
+    <img src="charts/03_decomposicao.svg" style="width:72%">
+  </figure>
+  <p>Quase 90% da alta vem dos mensais saindo mais. Os anuais também saem mais (+0,37 pp), e o aumento da fatia de anuais na base, que saem menos, segura parte da alta (−0,25 pp). As próximas páginas testam cada causa.</p>
+
+  <h3>Hipótese A · O reajuste do mensal em 01/03/2026</h3>
+  <p><b>Como testar:</b> só o mensal subiu de preço; o anual não. O anual serve de grupo de comparação. Se algo geral (estação, mercado) piorou o churn, os dois planos sobem juntos; se foi o preço, só o mensal sobe. É a <b>diferença em diferenças</b>.</p>
+  <figure>
+    <figcaption>Churn mensal por plano <span>· a faixa vermelha marca os três meses depois do reajuste.</span></figcaption>
+    <img src="charts/02_churn_plano.svg" style="width:86%">
+  </figure>
+  <table>
+    <tr><th>Plano</th><th class="n">set/25–fev/26</th><th class="n">mar–mai/26</th><th class="n">Variação</th></tr>
+    <tr><td><span class="dot" style="background:var(--mensal)"></span>Mensal (teve reajuste)</td><td class="n">8,9%</td><td class="n">13,0%</td><td class="n" style="color:var(--crit)"><b>+4,1 pp</b></td></tr>
+    <tr><td><span class="dot" style="background:var(--anual)"></span>Anual (sem reajuste)</td><td class="n">3,6%</td><td class="n">3,0%</td><td class="n">−0,6 pp</td></tr>
+    <tr><td><b>Diferença em diferenças</b></td><td></td><td></td><td class="n" style="color:var(--crit)"><b>+4,7 pp/mês</b></td></tr>
+  </table>
+  <p>Outra forma de ver: dos mensais ativos em 1º de março, 24,5% saíram em 90 dias em 2025 e <b>33,3% em 2026</b>, quase 9 pontos a mais. A pesquisa de saída aponta na mesma direção: preço é o motivo mais citado (41% das 643 respostas), embora a pesquisa só ouça quem paga pelo site e quis responder.</p>
+  <div class="box concl"><h4><span class="sig good"><i>●</i> conclusão 2A</span></h4><p>O reajuste é a principal causa da subida. Ele explica cerca de 4,7 pontos a mais de churn por mês no mensal, entre março e maio. O efeito arrefece a partir de junho.</p></div>
+</section>
+
+<section class="page-break">
+  <div class="trail"><span class="done">1 Medir</span><span class="on">2 Explicar</span><span>3 Grupos</span><span>4 Prever</span><span>5 Texto e imagem</span><span>6 Campanha</span><span>7 Retorno</span><span>8 Mensagem</span></div>
+  <h3 style="margin-top:0">Hipótese B · Uma falha de produto no Android</h3>
+  <p><b>Por que suspeitar:</b> em junho, o churn caiu no iOS e não no Android. Três fontes independentes contam a mesma história:</p>
+  <div class="grid3">
+    <div class="box ctx" style="margin:0"><h4>Treinos</h4><p class="small" style="color:var(--ink)">Em maio e junho, <b>19% dos treinos ao ar livre no Android</b> foram gravados sem GPS (<code>gps_ok</code> falso). No iOS, 0%. Nos outros meses, 0% nos dois.</p></div>
+    <div class="box ctx" style="margin:0"><h4>Suporte</h4><p class="small" style="color:var(--ink)"><b>535 e 418 chamados sobre GPS</b> em maio e junho; zero em todos os outros meses. 46% deles foram registrados pelo atendente fora da categoria "técnico".</p></div>
+    <div class="box ctx" style="margin:0"><h4>Saída</h4><p class="small" style="color:var(--ink)">Em junho e julho, o churn do Android ficou <b>2,4 pp acima</b> do iOS. De janeiro a maio, a distância era de 0,3 pp.</p></div>
+  </div>
+  <figure>
+    <figcaption>Churn mensal por sistema, 2026 <span>· faixa âmbar: meses com GPS falhando; faixa vermelha: meses em que o Android perdeu mais gente.</span></figcaption>
+    <img src="charts/04_android_ios.svg" style="width:74%">
+  </figure>
+  <div class="box concl"><h4><span class="sig good"><i>●</i> conclusão 2B</span></h4><p>Uma falha de GPS no Android, em maio e junho, levou a mais saídas um mês depois. Nenhuma mensagem de retenção resolve um defeito: é um incidente de produto que precisa virar alerta de retenção.</p></div>
+
+  <h3>Hipótese C · As renovações anuais</h3>
+  <p>O plano anual cresceu muito no segundo semestre de 2024. Um ano depois, essas assinaturas chegaram à primeira renovação, quando o assinante decide de novo se paga. Em janeiro, por exemplo:</p>
+  <table>
+    <tr><th>Janeiro</th><th class="n">Anuais ativos em 1/jan</th><th class="n">Vencem no mês</th><th class="n">Saem entre os que vencem</th></tr>
+    <tr><td>2025</td><td class="n">4.358</td><td class="n">224</td><td class="n">37%</td></tr>
+    <tr><td>2026</td><td class="n">7.125</td><td class="n" style="color:var(--crit)"><b>670</b></td><td class="n" style="color:var(--crit)"><b>44%</b></td></tr>
+  </table>
+  <div class="box concl"><h4><span class="sig good"><i>●</i> conclusão 2C</span></h4><p>Mais anuais chegando à renovação (o triplo em janeiro), e um pouco mais deles saindo nessa hora. O momento de agir no anual é <b>antes</b> do vencimento.</p></div>
+
+  <h3>O que foi descartado</h3>
+  <table>
+    <tr><th>Suspeito</th><th>Teste</th><th>Resultado</th></tr>
+    <tr><td>Falha de pagamento</td><td>perdas depois de período de carência</td><td><span class="sig ctx"><i>■</i> estável</span> 0,43 → 0,46 pp</td></tr>
+    <tr><td>Perfil da base</td><td>mix de canal de aquisição, sistema e cobrança, jun/25 × jun/26</td><td><span class="sig ctx"><i>■</i> estável</span> só os anuais cresceram (+4 pp)</td></tr>
+    <tr><td>Pesquisa de saída</td><td>ela só registra o motivo; não muda o fluxo de cancelamento</td><td><span class="sig ctx"><i>■</i> não é causa</span></td></tr>
+  </table>
+  <div class="box warn"><h4><span class="sig warn"><i>◆</i> limite</span></h4><p>Só o reajuste tem um grupo de comparação (os anuais), e mesmo ele não é um experimento. GPS e renovações são associações fortes, coerentes entre fontes, mas não provas de causa.</p></div>
+</section>
+
+<!-- ============ 3 · GRUPOS ============ -->
+<section class="page-break">
+  <div class="trail"><span class="done">1 Medir</span><span class="done">2 Explicar</span><span class="on">3 Grupos</span><span>4 Prever</span><span>5 Texto e imagem</span><span>6 Campanha</span><span>7 Retorno</span><span>8 Mensagem</span></div>
+  <div class="eyebrow">Etapa 3 · Clusterização</div>
+  <h2>Seis grupos de assinantes, com risco muito diferente</h2>
+  <p class="q">Quem são os assinantes, em grupos que qualquer área entenda?</p>
+  <div class="tech"><b>Técnicas</b><span>k-means</span><span>padronização z-score</span><span>transformação log</span><span>coeficiente de silhueta</span></div>
+  <p>Agrupamos os assinantes ativos no corte pelo comportamento: dias ativos e aberturas do app, número de treinos, tendência de uso, seguidores, treinos em companhia, tempo de casa, plano e renovação. As variáveis foram padronizadas (e as muito assimétricas, como seguidores, passadas para log) para que nenhuma domine o agrupamento. A informação de quem saiu não entra: os grupos são descritivos, não preditivos.</p>
+  <figure>
+    <figcaption>Saída nos 60 dias seguintes, por grupo <span>· risco observado a partir de 31/07; vermelho &gt; 20%, âmbar &gt; 10%.</span></figcaption>
+    <img src="charts/09_segmentos.svg" style="width:76%">
+  </figure>
+  <table>
+    <tr><th>Grupo</th><th>Como se comporta</th><th class="n">% mensal</th><th class="n">Dias ativos/mês</th></tr>
+    <tr><td><b>Renovação desligada</b></td><td>já desligaram a renovação; quase sem uso; quase todos anuais</td><td class="n">2%</td><td class="n">0,4</td></tr>
+    <tr><td><b>Recém-chegados</b></td><td>cerca de um mês de casa, sem seguidores</td><td class="n">65%</td><td class="n">5,7</td></tr>
+    <tr><td><b>Moderados sem rede</b></td><td>treinam ~4 dias por mês; quase ninguém os segue</td><td class="n">47%</td><td class="n">3,9</td></tr>
+    <tr><td><b>Moderados conectados</b></td><td>mesmo uso, mas com seguidores</td><td class="n">50%</td><td class="n">3,9</td></tr>
+    <tr><td><b>Treinam em grupo</b></td><td>marcam companhia nos treinos</td><td class="n">52%</td><td class="n">7,3</td></tr>
+    <tr><td><b>Assíduos</b></td><td>treinam 12 dias por mês</td><td class="n">50%</td><td class="n">12,5</td></tr>
+  </table>
+  <p>O padrão é claro: <b>uso e rede protegem</b>. Os assíduos saem 5,5%; quem treina sozinho e pouco, 8,2%; o recém-chegado, que ainda não criou hábito nem rede, 11,4%.</p>
+  <div class="box warn"><h4><span class="sig warn"><i>◆</i> atenção</span></h4><p>A separação entre os grupos é fraca (silhueta 0,18): eles são faixas de comportamento, não ilhas. Servem para comunicar e escolher o tom da mensagem. A decisão de contato usa o recorte em que o sorteio de agosto mede efeito (etapa 6).</p></div>
+  <div class="box concl"><h4><span class="sig good"><i>●</i> conclusão 3</span></h4><p>O risco se concentra em quem já desligou a renovação (22,5% saem em 60 dias) e nos recém-chegados (11,4%). Hábito e rede social são o que segura o assinante, e é isso que o desafio estimula.</p></div>
+</section>
+
+<!-- ============ 4 · PREVER ============ -->
+<section class="page-break">
+  <div class="trail"><span class="done">1 Medir</span><span class="done">2 Explicar</span><span class="done">3 Grupos</span><span class="on">4 Prever</span><span>5 Texto e imagem</span><span>6 Campanha</span><span>7 Retorno</span><span>8 Mensagem</span></div>
+  <div class="eyebrow">Etapa 4 · Classificação supervisionada</div>
+  <h2>Dez por cento da base concentra dois terços das saídas</h2>
+  <p class="q">Qual a probabilidade de cada assinante sair nos 60 dias seguintes ao corte, até 29/11/2026?</p>
+  <div class="tech"><b>Técnicas</b><span>validação fora do tempo</span><span>prevenção de vazamento</span><span>regressão logística</span><span>árvore CART</span><span>random forest</span><span>gradient boosting</span><span>AUC · curva de ganho</span><span>calibração</span></div>
+  <h3>Como o modelo foi montado para não se enganar</h3>
+  <ul>
+    <li><b>Separação no tempo.</b> Treino com fotos da base em 01/03, 01/04, 01/05 e 01/06/2026 (56.569 linhas). Teste com a foto de 31/07/2026 (14.049 assinantes), que o modelo nunca viu.</li>
+    <li><b>Sem informação do futuro.</b> Cada variável usa só dados anteriores à data da foto. Os campos de fim de assinatura ficam fora.</li>
+    <li><b>Quatro modelos, do simples ao complexo:</b> regressão logística (referência), árvore de decisão (legível como regra), random forest (bagging) e gradient boosting.</li>
+  </ul>
+  <div class="grid2">
+    <div>
+      <table>
+        <tr><th>Modelo</th><th class="n">AUC</th><th class="n">Captura top 1.500</th></tr>
+        <tr><td>Regressão logística</td><td class="n">0,932</td><td class="n">65,3%</td></tr>
+        <tr><td>Árvore de decisão</td><td class="n">0,917</td><td class="n">63,0%</td></tr>
+        <tr><td>Random forest</td><td class="n"><b>0,936</b></td><td class="n"><b>66,5%</b></td></tr>
+        <tr><td>Gradient boosting</td><td class="n">0,935</td><td class="n">66,1%</td></tr>
+        <tr><td style="color:var(--muted)">Ao acaso</td><td class="n" style="color:var(--muted)">0,500</td><td class="n" style="color:var(--muted)">10,2%</td></tr>
+      </table>
+      <p class="small"><b>Captura no top 1.500</b> = das pessoas que de fato saíram, quantas estavam entre as 1.500 de maior risco. É a medida que importa para o CRM, que só tem 1.500 WhatsApps.</p>
+      <p class="small">Os quatro modelos ficam próximos; a logística, mais simples, perde só 1 ponto. Usamos o gradient boosting, empatado com o melhor e mais estável entre as datas.</p>
+    </div>
+    <figure style="margin-top:0">
+      <figcaption>Curva de captura <span>· contatar do maior para o menor risco.</span></figcaption>
+      <img src="charts/05_captura.svg">
+    </figure>
+  </div>
+  <h3>O que o modelo olha</h3>
+  <p>As variáveis mais fortes, em ordem: <b>dias até a próxima cobrança</b>, <b>renovação desligada</b>, tempo de casa, dias desde o último treino, idade e <b>post de "meta cumprida"</b>. Faz sentido: quem desligou a renovação já decidiu; quem tem cobrança dentro da janela pode sair agora; e quem acabou de cumprir uma meta (a prova, o casamento, a viagem) perde o motivo para seguir pagando.</p>
+  <div class="box warn"><h4><span class="sig warn"><i>◆</i> atenção</span></h4><p>Parte da precisão vem de quem já desligou a renovação, que é fácil de prever e difícil de recuperar. Entre quem ainda está com a renovação ligada, onde dá para prevenir, a AUC é 0,85, ainda forte. No decil de maior risco o modelo superestima um pouco (prevê 77%, ocorrem 69%), por isso é recalibrado a cada mês.</p></div>
+  <div class="box concl"><h4><span class="sig good"><i>●</i> conclusão 4</span></h4><p>A lista de risco funciona: os 1.500 do topo concentram 66% das saídas, seis vezes o acaso. Para o corte, o modelo prevê <b>1.794 saídas até 29/11</b>; o risco médio é de 19% no mensal e 7% no anual. Mas risco não diz se o contato ajuda. Isso só o sorteio responde (etapa 6).</p></div>
+</section>
+
+<!-- ============ 5 · TEXTO E IMAGEM ============ -->
+<section class="page-break">
+  <div class="trail"><span class="done">1 Medir</span><span class="done">2 Explicar</span><span class="done">3 Grupos</span><span class="done">4 Prever</span><span class="on">5 Texto e imagem</span><span>6 Campanha</span><span>7 Retorno</span><span>8 Mensagem</span></div>
+  <div class="eyebrow">Etapa 5 · Extração com IA generativa</div>
+  <h2>Texto paga o que custa; imagem não acrescenta nada</h2>
+  <p class="q">Posts, chamados, questionário e mapas de calor melhoram a previsão o bastante para pagar o custo de processá-los?</p>
+  <div class="tech"><b>Técnicas</b><span>extração com esquema fixo</span><span>LLM como anotador</span><span>padrão-ouro rotulado</span><span>ablação</span><span>segmentação de imagem por cor</span></div>
+  <p>Texto e imagem não entram num modelo como estão: precisam virar campo. Cada fonte foi transformada com um esquema fixo de saída. Nesta versão, a extração foi feita por regras (dicionários e expressões regulares) que devolvem os mesmos campos que o prompt do LLM devolverá em produção:</p>
+  <table>
+    <tr><th>Fonte</th><th>Campos extraídos</th><th>Exemplo</th></tr>
+    <tr><td>Posts da rede</td><td>meta cumprida · meta futura · mudança de vida · lesão · falha do app · intenção de sair</td><td><i>"medalha no peito, a maratona concluída"</i> → meta cumprida</td></tr>
+    <tr><td>Chamados</td><td>tema real: GPS · sincronização · cobrança · cancelar · conta</td><td><i>"o app não grava meu percurso"</i> → GPS (o atendente marcou "cobrança")</td></tr>
+    <tr><td>Questionário de entrada</td><td>objetivo: evento com data · saúde · social · estética · vazio; dias por semana</td><td><i>"preciso estar pronta pra formatura"</i> → evento com data</td></tr>
+    <tr><td>Mapas de calor</td><td>área percorrida · intensidade · parque, água ou praia em volta da rota</td><td>contagem de pixels por cor</td></tr>
+  </table>
+  <div class="grid2">
+    <figure style="margin-top:0">
+      <figcaption>Ganho na captura do top 1.500 <span>· cada par medido no seu próprio teste.</span></figcaption>
+      <img src="charts/10_texto_imagem.svg">
+    </figure>
+    <div>
+      <h3 style="margin-top:0">Custo de extrair com IA, por rodada</h3>
+      <table>
+        <tr><th>Como</th><th class="n">Chamadas</th><th class="n">Custo</th></tr>
+        <tr><td>Uma vez por linha</td><td class="n">187.660</td><td class="n">R$ 464</td></tr>
+        <tr><td><b>Uma vez por frase distinta</b></td><td class="n">28.341</td><td class="n"><b>R$ 70</b></td></tr>
+        <tr><td>Mapas com LLM de visão</td><td class="n">13.047</td><td class="n">R$ 47</td></tr>
+      </table>
+      <p class="small">Os textos se repetem muito ("funcional em casa", "perna destruída"), então extrair cada frase distinta uma vez e reaproveitar o resultado corta o custo em 85%. Preços de exemplo de um modelo pequeno (US$ 1 / US$ 5 por milhão de tokens, dólar a R$ 5,50).</p>
+    </div>
+  </div>
+  <p><b>Texto:</b> nos quatro modelos, a captura sobe de 3,5 a 4,3 pontos. São cerca de 50 a 60 saídas a mais encontradas em cada lista de 1.500, por R$ 70. <b>Imagem:</b> quem tem mapa sai menos (9% contra 20%), mas o modelo já sabe disso pelo número de treinos; o mapa não acrescenta nada.</p>
+  <div class="box warn"><h4><span class="sig warn"><i>◆</i> pendente</span></h4><p>A extração ainda precisa ser conferida contra uma amostra rotulada à mão. 300 textos sorteados estão em <code>outputs/amostra_rotulagem.csv</code>; o notebook calcula o acerto assim que a coluna for preenchida.</p></div>
+  <div class="box concl"><h4><span class="sig good"><i>●</i> conclusão 5</span></h4><p>Usar texto, extraído uma vez por frase distinta. Não usar imagem, nem por pixels nem por LLM de visão. O texto também revela o que nenhuma tabela mostra: o assinante que acabou de cumprir a meta e o chamado de GPS escondido em "cobrança".</p></div>
+</section>
+
+<!-- ============ 6 · CAMPANHA ============ -->
+<section class="page-break">
+  <div class="trail"><span class="done">1 Medir</span><span class="done">2 Explicar</span><span class="done">3 Grupos</span><span class="done">4 Prever</span><span class="done">5 Texto e imagem</span><span class="on">6 Campanha</span><span>7 Retorno</span><span>8 Mensagem</span></div>
+  <div class="eyebrow">Etapa 6 · Uplift e regra de decisão</div>
+  <h2>Contatar ajuda alguns e prejudica outros</h2>
+  <p class="q">A campanha de 10/08 funcionou? Para quem?</p>
+  <div class="tech"><b>Técnicas</b><span>experimento randomizado (A/B)</span><span>intenção de tratar</span><span>intervalo de confiança 95%</span><span>efeito heterogêneo</span><span>uplift · tipologia de Siegel</span></div>
+  <p>Em 10/08, os 14.120 pagantes foram sorteados em quatro grupos: desafio, cupom, conteúdo e controle (sem mensagem). Como o sorteio iguala os grupos em média, a diferença de saída entre um grupo e o controle é efeito da mensagem. Medimos dois resultados até o corte (51 dias): <b>saiu</b> e <b>desligou a renovação</b>. O segundo é o sinal que importa no anual, que só sai na renovação.</p>
+  <p>No total, o efeito é pequeno (o cupom reduz a saída em 1,9 pp). Mas a média esconde efeitos opostos. Separando por plano, uso e renovação:</p>
+  <figure>
+    <figcaption>Efeito de cada mensagem contra o controle <span>· ponto = efeito; linha = intervalo de 95%. Verde reduz a saída, vermelho aumenta, cinza não se distingue de zero.</span></figcaption>
+    <img src="charts/06_campanha.svg" style="width:92%">
+  </figure>
+  <table>
+    <tr><th>Grupo</th><th>O que aconteceu</th><th>Tipo (Siegel)</th></tr>
+    <tr><td>Mensal ativo</td><td><span class="sig good"><i>●</i></span> as três mensagens reduzem a saída: cupom −5,9 pp, desafio −4,3 pp, conteúdo −3,0 pp (controle: 11,6%)</td><td>persuadíveis</td></tr>
+    <tr><td>Anual ativo</td><td><span class="sig good"><i>●</i></span> o desafio reduz o desligamento em 3,8 pp; cupom e conteúdo não fazem diferença</td><td>persuadíveis ao desafio</td></tr>
+    <tr><td>Anual dorminhoco</td><td><span class="sig crit"><i>▲</i></span> qualquer mensagem <b>triplica</b> o desligamento: de 8% para cerca de 25%</td><td>não perturbe</td></tr>
+    <tr><td>Renovação já desligada</td><td><span class="sig ctx"><i>■</i></span> nenhuma mensagem faz voltar</td><td>perdidos</td></tr>
+  </table>
+  <p>O dorminhoco anual é o caso mais importante. Ele paga por um app que quase não usa e não pensa nisso até a mensagem lembrá-lo. É exatamente o grupo que o enunciado descreve como "os que não se deve perturbar".</p>
+  <div class="box concl"><h4><span class="sig good"><i>●</i> conclusão 6</span></h4><p>A regra não é "contatar quem tem mais risco". É contatar onde o sorteio mostrou efeito: <b>mensais e anuais ativos recebem o desafio</b>. Os dorminhocos anuais e quem já desligou a renovação <b>ficam quietos</b>. O WhatsApp e o CS ainda não têm efeito medido; entram como teste sorteado, apontados pela lista de risco.</p></div>
+</section>
+
+<!-- ============ 7 · RETORNO ============ -->
+<section class="page-break">
+  <div class="trail"><span class="done">1 Medir</span><span class="done">2 Explicar</span><span class="done">3 Grupos</span><span class="done">4 Prever</span><span class="done">5 Texto e imagem</span><span class="done">6 Campanha</span><span class="on">7 Retorno</span><span>8 Mensagem</span></div>
+  <div class="eyebrow">Etapa 7 · Análise prescritiva</div>
+  <h2>A regra seletiva rende R$ 93 mil por onda; o cupom em massa perde R$ 397 mil</h2>
+  <p class="q">Quanto a Vitaliza ganha com a regra, comparada a não fazer nada?</p>
+  <div class="tech"><b>Técnicas</b><span>receita incremental</span><span>avaliação orientada a lucro</span><span>margem de contribuição</span><span>otimização sob restrição</span><span>análise de sensibilidade</span></div>
+  <h3>Como a conta é feita</h3>
+  <p>Só entra a receita de quem ficou <b>por causa</b> do contato: o efeito medido no sorteio vezes o número de contatados. Quem ficaria de qualquer jeito não entra, e o cupom dado a essa pessoa é custo.</p>
+  <ul>
+    <li><b>Mensal retido:</b> margem por mês (preço líquido do canal − R$ 4,20 de custo de servir; na loja, R$ 33,92 − 4,20 = R$ 29,72) vezes 6 meses.</li>
+    <li><b>Anual retido:</b> uma renovação (na loja, R$ 254,92 − 12 × R$ 4,20 = R$ 204,52).</li>
+    <li><b>Custos:</b> e-mail R$ 0,01 por contato; cupom de R$ 35,91 (mensal) ou R$ 25 (anual) para cada pessoa do grupo cupom que continua.</li>
+  </ul>
+  <figure>
+    <figcaption>Lucro incremental por onda de contato <span>· comparado a não fazer nada.</span></figcaption>
+    <img src="charts/07_estrategias.svg" style="width:74%">
+  </figure>
+  <div class="grid2">
+    <div>
+      <table>
+        <tr><th>Regra seletiva</th><th class="n">Mensal</th><th class="n">Anual</th></tr>
+        <tr><td>Recebem o desafio</td><td class="n">6.107</td><td class="n">5.492</td></tr>
+        <tr><td>Efeito no sorteio</td><td class="n">−4,3 pp</td><td class="n">−3,8 pp</td></tr>
+        <tr><td>Saídas evitadas</td><td class="n">~260</td><td class="n">~207</td></tr>
+        <tr><td><b>Lucro</b></td><td class="n"><b>R$ 48,7 mil</b></td><td class="n"><b>R$ 44,5 mil</b></td></tr>
+      </table>
+    </div>
+    <div>
+      <table>
+        <tr><th>Custo mensal</th><th class="n">R$</th></tr>
+        <tr><td>push + e-mail (11.599)</td><td class="n">116</td></tr>
+        <tr><td>WhatsApp teste (1.500)</td><td class="n">600</td></tr>
+        <tr><td>CS teste (300)</td><td class="n">5.400</td></tr>
+        <tr><td>IA: redação + extração</td><td class="n">147</td></tr>
+        <tr><td><b>Total (16% do orçamento)</b></td><td class="n"><b>6.263</b></td></tr>
+      </table>
+    </div>
+  </div>
+  <p><b>Por que o desafio e não o cupom, se o cupom tem efeito maior no mensal?</b> O cupom evita 1,5 ponto a mais de saídas, o que vale cerca de R$ 2,70 por pessoa contatada, mas custa cerca de R$ 34 por pessoa, porque quase todos os que receberam teriam ficado de qualquer jeito.</p>
+  <p><b>Por que a regra rende o dobro de "desafio para todos"?</b> Porque deixa de fora os dorminhocos anuais e quem já desligou a renovação, onde o contato faz mal ou não faz nada.</p>
+  <div class="box warn"><h4><span class="sig warn"><i>◆</i> sensibilidade</span></h4>
+    <p>Com 3 meses de margem no mensal, a regra rende R$ 69 mil; com 12, R$ 142 mil. A parte menos certa é o anual: um desligamento evitado em 51 dias ainda não é uma renovação garantida. <b>Contando só o mensal</b>, são R$ 49 mil. No pior caso (só mensal, 3 meses, efeito no limite inferior do intervalo) ainda são ~R$ 12 mil por onda, o dobro do custo.</p>
+  </div>
+  <div class="box concl"><h4><span class="sig good"><i>●</i> conclusão 7</span></h4><p>A regra seletiva rende <b>R$ 93 mil por onda</b>, entre R$ 49 mil (só mensal) e R$ 142 mil, a um custo de R$ 6,3 mil por mês, cerca de R$ 13 por saída evitada. O cupom em massa perde dinheiro em qualquer cenário.</p></div>
+</section>
+
+<!-- ============ 8 · MENSAGEM ============ -->
+<section class="page-break">
+  <div class="trail"><span class="done">1 Medir</span><span class="done">2 Explicar</span><span class="done">3 Grupos</span><span class="done">4 Prever</span><span class="done">5 Texto e imagem</span><span class="done">6 Campanha</span><span class="done">7 Retorno</span><span class="on">8 Mensagem</span></div>
+  <div class="eyebrow">Etapa 8 · IA generativa como redatora</div>
+  <h2>Cada pessoa contatada recebe um texto escrito para ela</h2>
+  <p class="q">O que dizer a cada pessoa contatada?</p>
+  <div class="tech"><b>Técnicas</b><span>geração guiada por briefing</span><span>guardrails</span><span>separação decisão × redação</span><span>revisão humana amostral</span></div>
+  <p>A IA não decide nada: recebe a decisão da regra (quem, por qual canal, com qual oferta) e o que a extração encontrou sobre a pessoa, e escreve o texto. O briefing define o tom e o que não pode ser dito.</p>
+  <div class="grid2">
+    <div class="box ctx" style="margin-top:0"><h4>Entrada (por pessoa)</h4>
+      <ul class="small" style="color:var(--ink)">
+        <li>segmento e ação definidos pela regra</li>
+        <li>objetivo do questionário de entrada</li>
+        <li>se postou "meta cumprida" nos últimos 60 dias</li>
+        <li>se teve falha de GPS ou chamado de GPS</li>
+        <li>dias ativos no último mês; se treina junto</li>
+        <li>canal e limite de caracteres</li>
+      </ul>
+    </div>
+    <div class="box ctx" style="margin-top:0"><h4>Briefing</h4>
+      <ul class="small" style="color:var(--ink)">
+        <li>tom de parceiro de treino: direto, caloroso, sem culpa</li>
+        <li>só a oferta informada, com o valor exato</li>
+        <li><b>nunca</b> mencionar quanto a pessoa paga, cancelamento ou renovação</li>
+        <li><b>nunca</b> citar peso, doença ou endereço</li>
+        <li>se houve falha de GPS, reconhecer antes de convidar</li>
+        <li>um único convite, que abre o desafio no app</li>
+      </ul>
+    </div>
+  </div>
+  <h3>Exemplos</h3>
+  <table>
+    <tr><th style="width:30%">Quem</th><th>Mensagem</th></tr>
+    <tr><td>Mensal ativo, postou que completou os 10 km · push</td><td>"Você fechou os 10 km. Próximo passo: 6 semanas rumo aos 15. Bora?"</td></tr>
+    <tr><td>Recém-chegado, sem seguidores · e-mail</td><td>"Tem gente treinando perto de você toda semana. Entre no desafio da turma e treine junto já neste sábado."</td></tr>
+    <tr><td>Android, teve falha de GPS · push</td><td>"O GPS falhou com você em junho, e já corrigimos. Seu desafio de 6 semanas está pronto para recomeçar."</td></tr>
+  </table>
+  <p class="small">Custo de redação: ~R$ 77 por rodada de 11.599 textos. Controle de qualidade: 50 textos por lote lidos por uma pessoa e um filtro automático de termos proibidos.</p>
+
+  <h3 style="margin-top:6mm">O sistema completo</h3>
+  <div class="chain">
+    <div><b>Dados</b>13 arquivos, status reconstruído pelos eventos</div>
+    <div><b>Extração</b>texto vira campo; uma vez por frase distinta</div>
+    <div><b>Previsão</b>risco de saída em 60 dias por assinante</div>
+    <div><b>Decisão</b>desafio onde o sorteio mostrou efeito; silêncio onde fez mal</div>
+    <div><b>Mensagem</b>texto escrito por IA, dentro do briefing</div>
+  </div>
+  <figure>
+    <figcaption>Como a base fica dividida em novembro <span>· 14.753 pagantes no corte.</span></figcaption>
+    <img src="charts/08_alocacao.svg">
+  </figure>
+  <p class="small">Dentro dos contatados, os 1.500 de maior risco (98% mensais) também recebem WhatsApp, em teste sorteado. Entre os que já desligaram a renovação, os 300 de maior risco recebem uma ligação do CS oferecendo pausa de 60 dias, também em teste.</p>
+</section>
+
+<!-- ============ LIMITES ============ -->
+<section class="page-break hard">
+  <div class="eyebrow">Fechamento</div>
+  <h2>O que sabemos, o que ainda não sabemos, e o que fazer agora</h2>
+  <table>
+    <tr><th style="width:42%">Afirmação</th><th style="width:18%">Confiança</th><th>Por quê</th></tr>
+    <tr><td>A base e o churn estão medidos corretamente</td><td><span class="sig good"><i>●</i> alta</span></td><td>reproduz todos os números do enunciado</td></tr>
+    <tr><td>O reajuste elevou o churn do mensal</td><td><span class="sig good"><i>●</i> alta</span></td><td>diferença em diferenças contra o anual</td></tr>
+    <tr><td>A falha de GPS elevou o churn do Android</td><td><span class="sig good"><i>●</i> alta</span></td><td>três fontes independentes coincidem</td></tr>
+    <tr><td>O desafio reduz a saída do mensal ativo</td><td><span class="sig good"><i>●</i> alta</span></td><td>experimento sorteado, intervalo sem o zero</td></tr>
+    <tr><td>Contatar o dorminhoco anual faz mal</td><td><span class="sig good"><i>●</i> alta</span></td><td>experimento sorteado, efeito grande</td></tr>
+    <tr><td>O desafio no anual vira renovação</td><td><span class="sig warn"><i>◆</i> média</span></td><td>medido por desligamento em 51 dias; confirmar no vencimento</td></tr>
+    <tr><td>O efeito se repete em novas ondas</td><td><span class="sig warn"><i>◆</i> média</span></td><td>uma única campanha; medir contra controle permanente</td></tr>
+    <tr><td>WhatsApp e CS funcionam</td><td><span class="sig crit"><i>▲</i> desconhecida</span></td><td>nunca testados; por isso entram como teste</td></tr>
+    <tr><td>A extração de texto acerta</td><td><span class="sig warn"><i>◆</i> a medir</span></td><td>falta a rotulagem manual da amostra</td></tr>
+  </table>
+
+  <h3>Próximos passos</h3>
+  <table>
+    <tr><th style="width:18%">Quando</th><th>O quê</th></tr>
+    <tr><td>Semana 1</td><td>Sortear um controle permanente de 10% e disparar a lista de novembro (o horizonte de 60 dias já está correndo).</td></tr>
+    <tr><td>Semanas 1–3</td><td>Monitorar chamados de GPS; se voltarem, suspender contato com os afetados e avisar primeiro.</td></tr>
+    <tr><td>Semanas 4–5</td><td>Retreinar o modelo com outubro e gerar a lista de dezembro.</td></tr>
+    <tr><td>Semana 9</td><td>Ler os testes de WhatsApp e CS contra o controle.</td></tr>
+    <tr><td>Semana 10</td><td>Decidir: escalar, ajustar ou parar.</td></tr>
+  </table>
+
+  <div class="box concl" style="margin-top:5mm"><h4><span class="sig good"><i>●</i> conclusão final</span></h4>
+    <p>O churn subiu por razões identificáveis: o preço, um defeito e o calendário das renovações. Uma parte se resolve fora do CRM: corrigir o produto e cuidar do mensal depois de um reajuste. A outra parte se resolve com uma regra simples, que contata 11.599 pessoas com um desafio e deixa 3.154 em paz. Ela rende cerca de R$ 93 mil por onda e usa 16% do orçamento, e cada passo pode ser medido contra um grupo que não recebeu nada.</p>
+  </div>
+</section>
+
+
+<!-- ============ APÊNDICE · FUNDAMENTOS ============ -->
+<style>
+  .fund { border-collapse: collapse; width: 100%; font-size: 8.4pt; margin: 1.5mm 0 4mm; break-inside: auto !important; }
+  .fund tr { break-inside: avoid; }
+  .fund th { font-size: 7pt; }
+  .fund td { padding: 1.6mm 1.6mm; }
+  .fund td:first-child { width: 24%; font-weight: 600; }
+  .fund td:nth-child(2) { width: 38%; }
+  .fund td:nth-child(3) { color: var(--ink2); }
+  .fund .ref { display: block; font-size: 7pt; color: var(--muted); font-weight: 400; margin-top: .5mm; }
+  .stage { display: flex; align-items: center; gap: 2mm; margin: 4mm 0 1mm; font-size: 10pt; font-weight: 700; break-after: avoid; }
+  .stage i { font-style: normal; background: var(--ink); color: #fff; border-radius: 1mm; padding: .3mm 2mm; font-size: 7.5pt; }
+  .ladder { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2mm; margin: 3mm 0 4mm; }
+  .ladder div { border-radius: 1.5mm; padding: 2.5mm; font-size: 8pt; background: var(--ctx-bg); }
+  .ladder b { display: block; font-size: 9pt; margin-bottom: .5mm; }
+  .ladder div:nth-child(1) { background: #eef3fb; } .ladder div:nth-child(2) { background: #dfe9f8; }
+  .ladder div:nth-child(3) { background: #cddff5; } .ladder div:nth-child(4) { background: #b7d3f6; }
+</style>
+<section class="page-break hard">
+  <div class="eyebrow">Apêndice · Fundamentos</div>
+  <h2>As técnicas e os conceitos que sustentam cada conclusão</h2>
+  <p>Este apêndice explica, em linguagem direta, o método por trás de cada etapa: o que é, por que foi a escolha certa para este problema e onde aparece no trabalho. As referências são as do enunciado do case e a literatura clássica de cada técnica.</p>
+
+  <h3>A espinha dorsal: das perguntas descritivas às prescritivas</h3>
+  <p>O trabalho segue o roteiro do <b>CRISP-DM</b> (entender o negócio e os dados antes de modelar, avaliar antes de usar) e sobe os quatro degraus da análise de dados. Cada degrau depende do anterior:</p>
+  <div class="ladder">
+    <div><b>Descritiva</b>O que aconteceu? Etapa 1: medir a base e o churn.</div>
+    <div><b>Diagnóstica</b>Por que aconteceu? Etapas 2 e 3: causas e grupos.</div>
+    <div><b>Preditiva</b>O que vai acontecer? Etapas 4 e 5: risco de saída.</div>
+    <div><b>Prescritiva</b>O que fazer? Etapas 6 a 8: regra, retorno, mensagem.</div>
+  </div>
+  <p class="src">Chapman et al. (2000), CRISP-DM 1.0 · Lepenioti et al. (2020), Prescriptive analytics.</p>
+
+  <div class="stage"><i>1</i> Medir</div>
+  <table class="fund">
+    <tr><th>Técnica / conceito</th><th>O que é</th><th>Onde e por quê</th></tr>
+    <tr><td>Reconstrução de estado a partir de log de eventos</td><td>Em vez de confiar no "retrato" atual, recalcula a situação de cada entidade em qualquer data, aplicando os eventos em ordem cronológica (um <i>event sourcing</i> analítico).</td><td><code>assinaturas.csv</code> é sobrescrito a cada mudança. Só o log de eventos diz quem estava ativo em março. Cada assinante vira uma sequência de <b>períodos pagantes</b> (início, fim).</td></tr>
+    <tr><td>População em risco</td><td>Conceito da análise de sobrevivência: a taxa de um evento só se calcula sobre quem podia sofrê-lo no início do período.</td><td>Churn = perdas no mês ÷ ativos no início do mês. Quem entra e sai no mesmo mês fica fora, por isso 3.389 fins de assinatura viram 3.362 perdas.</td></tr>
+    <tr><td>Qualidade de dados</td><td>Checagem das dimensões de <b>validade</b> (formato), <b>consistência</b> (mesma coisa escrita igual), <b>completude</b> e <b>unicidade</b>.</td><td>Valores em dois formatos, 6 grafias de sexo, tipos de treino em dois idiomas, fusos misturados. Tudo normalizado antes de qualquer conta.</td></tr>
+    <tr><td>Conciliação com a fonte oficial</td><td>Validar uma regra reproduzindo números já conhecidos antes de usá-la para gerar números novos.</td><td>A regra reproduz os 7 números do enunciado. Só por isso os números novos (por plano, canal, sistema) merecem confiança.</td></tr>
+  </table>
+
+  <div class="stage"><i>2</i> Explicar</div>
+  <table class="fund">
+    <tr><th>Técnica / conceito</th><th>O que é</th><th>Onde e por quê</th></tr>
+    <tr><td>Decomposição taxa × mix <span class="ref">(shift-share, Kitagawa)</span></td><td>Separa a variação de uma média em duas partes: mudança nas taxas de cada grupo e mudança no peso de cada grupo.</td><td>O churn médio pode subir só porque a base mudou de composição. A decomposição mostra que o mensal explica +0,87 pp, o anual +0,37 pp e o mix −0,25 pp.</td></tr>
+    <tr><td>Diferença em diferenças (DiD)</td><td>Compara a variação de um grupo tratado com a de um grupo não tratado, no mesmo período. O que for comum aos dois (estação, mercado) se cancela. Supõe <b>tendências paralelas</b> sem o tratamento.</td><td>Só o mensal teve reajuste. A variação do mensal (+4,1 pp) menos a do anual (−0,6 pp) dá o efeito atribuível ao preço: +4,7 pp/mês.</td></tr>
+    <tr><td>Triangulação</td><td>Confirmar uma hipótese por fontes independentes, que não compartilham os mesmos erros.</td><td>Falha de GPS: treinos sem GPS (app), chamados de suporte (atendimento) e churn por sistema (assinaturas) apontam o mesmo período.</td></tr>
+    <tr><td>Viés de seleção</td><td>Quando quem aparece nos dados se escolheu sozinho, a amostra não representa o todo.</td><td>A pesquisa de saída só ouve quem paga pelo site e quis responder (~10% das saídas). Foi usada para ler motivos, nunca para generalizar.</td></tr>
+    <tr><td>Correlação × causalidade</td><td>Associação aponta suspeitos; só um grupo de comparação adequado (ou um sorteio) sustenta causa.</td><td>Por isso cada hipótese recebe um veredito com grau de confiança, e a seção de limites separa o que é prova do que é indício.</td></tr>
+  </table>
+
+  <div class="stage"><i>3</i> Grupos</div>
+  <table class="fund">
+    <tr><th>Técnica / conceito</th><th>O que é</th><th>Onde e por quê</th></tr>
+    <tr><td>Aprendizado não supervisionado · k-means</td><td>Agrupa pontos parecidos minimizando a distância de cada um ao centro do seu grupo (inércia intra-grupo). Não usa nenhum rótulo.</td><td>Segmentar sem usar quem saiu evita que os grupos sejam só "risco alto/baixo" disfarçado. São descrições de comportamento.</td></tr>
+    <tr><td>Padronização (z-score) e log</td><td>Colocar variáveis na mesma escala (média 0, desvio 1) e comprimir as muito assimétricas.</td><td>Sem isso, minutos de treino (centenas) dominariam seguidores (unidades), e o k-means agruparia só por minutos.</td></tr>
+    <tr><td>Coeficiente de silhueta</td><td>Mede, de −1 a 1, o quanto cada ponto está mais perto do próprio grupo do que do vizinho.</td><td>Escolha do número de grupos (k = 6) e um aviso honesto: 0,18 indica faixas de comportamento, não grupos isolados.</td></tr>
+  </table>
+
+  <div class="stage"><i>4</i> Prever</div>
+  <table class="fund">
+    <tr><th>Técnica / conceito</th><th>O que é</th><th>Onde e por quê</th></tr>
+    <tr><td>Classificação supervisionada</td><td>Aprender, com exemplos do passado rotulados (saiu / ficou), uma função que estima a probabilidade do rótulo para casos novos.</td><td>Alvo: sair em até 60 dias após a data de referência.</td></tr>
+    <tr><td>Fotos no tempo e variáveis <i>point-in-time</i></td><td>Montar a base de treino como várias fotos em datas passadas, cada uma só com o que se sabia naquela data.</td><td>Quatro fotos de treino (mar a jun) e uma de teste (31/07): o modelo aprende com várias situações da base.</td></tr>
+    <tr><td>Validação fora do tempo</td><td>Testar em um período posterior a todo o treino, como o modelo será usado na prática.</td><td>Uma divisão aleatória misturaria passado e futuro e inflaria o resultado. Aqui o teste é um mês que o modelo nunca viu.</td></tr>
+    <tr><td>Vazamento de dados <span class="ref">(Kaufman et al., 2012)</span></td><td>Usar, sem perceber, informação que só existe depois do evento que se quer prever.</td><td><code>status_atual</code>, <code>data_fim</code> e <code>motivo_fim</code> ficaram fora. Posts e chamados só entram se forem anteriores à data da foto.</td></tr>
+    <tr><td>Regressão logística (L2)</td><td>Modelo linear nas chances (log-odds), com penalidade que encolhe coeficientes para evitar sobreajuste.</td><td>Modelo de referência: simples e explicável. Ficou a apenas 1 ponto do melhor.</td></tr>
+    <tr><td>Árvore de decisão (CART)</td><td>Divide a base por perguntas sucessivas ("dias até a cobrança ≤ 59?") que mais separam quem sai de quem fica.</td><td>Leitura como regra de negócio. Profundidade 5 e mínimo de 200 por folha para não decorar ruído.</td></tr>
+    <tr><td>Bagging · random forest <span class="ref">(Breiman, 2001)</span></td><td>Média de centenas de árvores treinadas em amostras e variáveis sorteadas. Reduz a <b>variância</b> de uma árvore só.</td><td>Melhor captura no teste (66,5%).</td></tr>
+    <tr><td>Boosting · gradient boosting <span class="ref">(LightGBM)</span></td><td>Árvores em sequência, cada uma corrigindo o erro das anteriores. Reduz o <b>viés</b>.</td><td>Empatado com a floresta e mais estável entre datas: usado na lista final.</td></tr>
+    <tr><td>AUC-ROC, PR-AUC e curva de ganho</td><td>AUC: chance de o modelo dar risco maior a quem sai do que a quem fica. PR-AUC: precisão quando o evento é raro. Curva de ganho: quanto das saídas se alcança contatando os primeiros x%.</td><td>A métrica de negócio é a <b>captura no top 1.500</b>, o tamanho do teto de WhatsApp do CRM.</td></tr>
+    <tr><td>Calibração</td><td>Verificar se "30% de risco" corresponde, de fato, a 30% de saídas observadas.</td><td>A probabilidade entra na conta de retorno. O decil mais alto superestima (77% × 69%), daí a recalibração mensal.</td></tr>
+  </table>
+
+  <div class="stage"><i>5</i> Texto e imagem</div>
+  <table class="fund">
+    <tr><th>Técnica / conceito</th><th>O que é</th><th>Onde e por quê</th></tr>
+    <tr><td>Extração de informação com esquema fixo</td><td>Transformar texto livre em campos com nome e formato combinados antes (ex.: <code>meta_cumprida: sim/não</code>), para que virem variáveis.</td><td>Posts, chamados e questionário. Esquema definido antes de olhar o resultado, para não ajustar a regra ao que se quer ver.</td></tr>
+    <tr><td>LLM como anotador <span class="ref">(Gilardi; Alizadeh; Kubli, 2023)</span></td><td>Modelos de linguagem classificam texto com qualidade comparável à de anotadores humanos, a uma fração do custo.</td><td>Nesta versão, a extração foi feita por regras (dicionários e expressões regulares) com o mesmo esquema que o prompt do LLM devolve. Em produção, o LLM substitui as regras.</td></tr>
+    <tr><td>Deduplicação para custo</td><td>Processar cada conteúdo distinto uma vez e reaproveitar o resultado.</td><td>187.660 linhas viram 28.341 frases distintas: R$ 70 em vez de R$ 464 por rodada.</td></tr>
+    <tr><td>Padrão-ouro rotulado</td><td>Amostra sorteada classificada por pessoas, usada para medir o acerto da extração automática.</td><td>300 textos exportados para rotulagem manual (pendente).</td></tr>
+    <tr><td>Estudo de ablação</td><td>Medir o valor de um bloco de variáveis treinando o mesmo modelo com e sem ele, no mesmo teste.</td><td>Texto: +3,5 a +4,3 pp de captura. Imagem: −0,4 pp. Decide o que vale o custo.</td></tr>
+    <tr><td>Segmentação de imagem por cor e morfologia</td><td>Separar pixels por faixa de cor (limiarização em RGB) e "engordar" uma região (dilatação) para ver o que há em volta.</td><td>A rota é laranja sobre um fundo de 6 cores fixas: área percorrida, intensidade e % de parque, água e praia em volta da rota.</td></tr>
+    <tr><td>Validação cruzada estratificada (5 partes)</td><td>Dividir a base em 5 partes mantendo a proporção de saídas, treinar em 4 e testar na 5ª, em rodízio.</td><td>Os mapas só existem em duas datas, então o teste das imagens foi feito dentro da foto de 31/07.</td></tr>
+  </table>
+
+  <div class="stage"><i>6</i> Campanha</div>
+  <table class="fund">
+    <tr><th>Técnica / conceito</th><th>O que é</th><th>Onde e por quê</th></tr>
+    <tr><td>Experimento controlado randomizado (A/B) <span class="ref">(Kohavi; Tang; Xu, 2020)</span></td><td>Sortear quem recebe cada tratamento. O sorteio iguala os grupos em média, inclusive no que não se mede, e a diferença de resultado vira efeito causal.</td><td>A campanha de 10/08 é o único sorteio da base: a única fonte de causa, e não só de associação.</td></tr>
+    <tr><td>Intenção de tratar (ITT)</td><td>Analisar cada pessoa no grupo em que foi sorteada, tenha ela aberto a mensagem ou não.</td><td>Preserva o sorteio e mede o efeito real de <i>enviar</i>, que é a decisão do CRM.</td></tr>
+    <tr><td>Intervalo de confiança de 95%</td><td>Faixa de valores plausíveis para o efeito, dada a variação do sorteio (aproximação normal da diferença de proporções).</td><td>Efeito só é tratado como real quando o intervalo não cruza o zero (pontos verdes e vermelhos no gráfico).</td></tr>
+    <tr><td>Efeito heterogêneo (por subgrupo)</td><td>O mesmo tratamento pode ajudar uns e prejudicar outros; a média esconde isso.</td><td>Efeito médio pequeno (−1,9 pp), mas −4,3 pp no mensal ativo e +16,5 pp no dorminhoco anual.</td></tr>
+    <tr><td>Modelagem de uplift <span class="ref">(Radcliffe; Surry, 2011 · Gutierrez; Gérardy, 2017)</span></td><td>Estimar o efeito incremental do contato em cada pessoa ou grupo, e não a chance de sair.</td><td>A regra contata quem tem <b>efeito</b>, não quem tem mais risco.</td></tr>
+    <tr><td>Tipologia de Siegel <span class="ref">(Siegel, 2013, cap. 7)</span></td><td>Persuadíveis (ficam se contatados), garantidos, perdidos e "não perturbe" (saem porque foram contatados).</td><td>Mensal e anual ativos são persuadíveis; renovação desligada, perdidos; dorminhocos anuais, "não perturbe".</td></tr>
+  </table>
+  <div class="box warn" style="margin-top:0"><h4><span class="sig warn"><i>◆</i> comparações múltiplas</span></h4><p class="small" style="color:var(--ink)">Foram feitas 24 comparações (4 células × 3 mensagens × 2 resultados). Com tantas, uma ou outra pode passar no intervalo por acaso. As conclusões que guiam a regra (mensal ativo e dorminhoco anual) têm efeitos grandes e intervalos longe do zero; as demais são tratadas com cautela e remedidas com o controle permanente.</p></div>
+
+  <div class="stage"><i>7</i> Retorno</div>
+  <table class="fund">
+    <tr><th>Técnica / conceito</th><th>O que é</th><th>Onde e por quê</th></tr>
+    <tr><td>Receita incremental</td><td>Só conta o que não teria acontecido sem a ação. Quem ficaria de qualquer jeito não entra, e a oferta dada a essa pessoa é custo.</td><td>Ganho = efeito do sorteio × contatados × valor do assinante retido.</td></tr>
+    <tr><td>Avaliação orientada a lucro <span class="ref">(Verbeke et al., 2012)</span></td><td>Escolher modelos e regras pelo lucro que geram, não pela taxa de acerto.</td><td>O cupom tem o maior efeito no mensal, mas perde para o desafio no lucro.</td></tr>
+    <tr><td>Margem de contribuição e LTV</td><td>Receita líquida de taxas do canal menos o custo variável de servir, acumulada num horizonte.</td><td>Mensal na loja: R$ 33,92 − R$ 4,20 por mês, por 6 meses. Anual: uma renovação líquida.</td></tr>
+    <tr><td>Otimização sob restrição</td><td>Escolher, para cada grupo, a ação de maior lucro esperado, respeitando os limites de capacidade e orçamento.</td><td>Desafio, cupom, conteúdo ou nada, por célula; WhatsApp e CS limitados a 1.500 e 300, priorizados por risco.</td></tr>
+    <tr><td>Análise de sensibilidade e cenários</td><td>Recalcular o resultado variando as premissas mais incertas.</td><td>Horizonte de 3, 6 e 12 meses; só mensal; efeito no limite inferior do intervalo.</td></tr>
+  </table>
+
+  <div class="stage"><i>8</i> Mensagem</div>
+  <table class="fund">
+    <tr><th>Técnica / conceito</th><th>O que é</th><th>Onde e por quê</th></tr>
+    <tr><td>Geração guiada por briefing</td><td>O LLM recebe dados estruturados e regras explícitas de tom, conteúdo permitido e proibido, e devolve um formato fixo (JSON).</td><td>Um texto por pessoa, a partir do que a extração encontrou.</td></tr>
+    <tr><td>Separação entre decidir e redigir</td><td>O modelo de linguagem não escolhe quem contatar nem qual oferta: isso vem da regra medida.</td><td>Evita que o texto prometa o que a regra não autorizou.</td></tr>
+    <tr><td>Guardrails e revisão humana</td><td>Filtros automáticos de termos proibidos e leitura humana de uma amostra de cada lote.</td><td>Nunca mencionar preço, cancelamento ou dados sensíveis; 50 textos por lote revisados.</td></tr>
+  </table>
+
+  <div class="stage"><i>+</i> Comunicação</div>
+  <table class="fund">
+    <tr><th>Técnica / conceito</th><th>O que é</th><th>Onde e por quê</th></tr>
+    <tr><td>Codificação semântica de cor</td><td>Cada cor tem um único papel, sempre acompanhada de ícone e palavra (nunca só a cor).</td><td>Vermelho = problema, verde = conclusão, âmbar = incerteza, cinza = contexto; azul e laranja = os dois planos, em todos os gráficos.</td></tr>
+    <tr><td>Acessibilidade para daltonismo</td><td>Validar numericamente a distância entre cores sob simulação de daltonismo (ΔE em OKLab).</td><td>Os pares de cores dos gráficos passaram no validador; onde o contraste é baixo, há rótulo direto.</td></tr>
+  </table>
+
+  <h3>Referências</h3>
+  <p class="small">BREIMAN, L. Random forests. <i>Machine Learning</i>, v. 45, 2001 · CHAPMAN, P. et al. <i>CRISP-DM 1.0</i>. SPSS, 2000 · GILARDI, F.; ALIZADEH, M.; KUBLI, M. ChatGPT outperforms crowd workers for text-annotation tasks. <i>PNAS</i>, 2023 · GUTIERREZ, P.; GÉRARDY, J.-Y. Causal inference and uplift modelling. PMLR, 2017 · JAMES, G. et al. <i>An introduction to statistical learning</i>. Springer, 2023 · KAUFMAN, S. et al. Leakage in data mining. <i>ACM TKDD</i>, 2012 · KOHAVI, R.; TANG, D.; XU, Y. <i>Trustworthy online controlled experiments</i>. Cambridge, 2020 · LEPENIOTI, K. et al. Prescriptive analytics. <i>IJIM</i>, 2020 · RADCLIFFE, N.; SURRY, P. <i>Real-world uplift modelling</i>, 2011 · SIEGEL, E. <i>Predictive analytics</i>. Wiley, 2013 · VERBEKE, W. et al. New insights into churn prediction. <i>EJOR</i>, 2012.</p>
+</section>
+
+</body>
+</html>
