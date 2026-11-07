@@ -30,5 +30,18 @@
       "versao_app": ["baixa", "Só ajuda a investigar problema técnico."],
       "relogio_conectado": ["média", "'nenhum' é categoria válida (sem relógio). Inferível pela origem em atividades.parquet, mas só para quem treinou em 2026."]
     }
+  },
+  "eventos_assinatura": {
+    "arquivo": "eventos_assinatura.csv",
+    "sem_conteudo": [],
+    "criticidade": {
+      "user_id": ["alta", "Sem ele não se liga o evento ao assinante. Completo; não há assinatura_id, então os períodos de assinatura são montados pela sequência de eventos do usuário."],
+      "data_hora": ["alta", "Define quem estava ativo e quando saiu. Completa; lojas em UTC (186.323) e site em Brasília (89.242), coerente com o canal em 100% das linhas. Converter para Brasília muda o mês de 753 eventos."],
+      "evento": ["alta", "Define início, renovação e fim da assinatura. Completo; 11 tipos, todos do dicionário."],
+      "plano": ["média", "Vazio esperado nos trials (66.139 linhas, ainda sem plano). Fora deles, 6.734 desligamentos de renovação sem plano, inferível pelos eventos vizinhos. Eventos pagos completos."],
+      "canal_cobranca": ["alta", "Decide onde a pessoa cancela (loja ou site) e a receita líquida. Completo; um canal por usuário."],
+      "detalhe": ["média", "Só existe em assinatura_expirada: 6.071 das 17.830 têm motivo (renovacao_desligada, falha_pagamento, chargeback, reembolso). Separar saída voluntária de falha de cobrança pode ser inferido por periodo_carencia e pagamentos.csv, mas a inferência pode errar."]
+    },
+    "nota_contas": "São contas que não testaram nem assinaram desde 01/07/2024, início do histórico. Criticidade baixa: é o esperado num app freemium."
   }
 }
