@@ -24,8 +24,8 @@
 
 | # | Item | Onde | Dono | Status |
 |---|---|---|---|---|
-| 1 | Remover as 1.941 cobranças duplicadas | `src/vitaliza/features.py` (S3: `src/limpar_pagamentos.py`) | | ✅ |
-| 2 | Notebook de EDA unificado + 11 gráficos | `notebooks/eda_unificada.ipynb` · `saidas/graficos_unificados/` | | ✅ |
+| 1 | Remover as 1.941 cobranças duplicadas | `src/vitaliza/features.py` | | ✅ |
+| 2 | Notebook de EDA + 11 gráficos | `notebooks/eda.ipynb` · `saidas/graficos/` | | ✅ |
 | 3 | Customer Segmentation Report (5 p.) | `saidas/entrega_semana5/` | | ✅ |
 | 4 | 4 cartões de persona | `saidas/entrega_semana5/` | | ✅ |
 | 5 | Mini deck analítico (5 slides) | `saidas/entrega_semana5/` | | ✅ |
@@ -41,7 +41,7 @@
 | 3 | Levar o modelo para `vitaliza/model.py` (treinar, salvar, carregar) | S1 | | ⬜ |
 | 4 | Matriz de confusão, limiar e precisão × recall | rubrica | | ⬜ |
 | 5 | Importância de variáveis e análise de erros | S1 (parcial) | | 🟡 |
-| 6 | Rotular 300 textos e medir o acerto da extração | `saidas/solucao1/amostra_rotulagem.csv` | | ⬜ |
+| 6 | Gerar a amostra de 300 textos, rotular à mão e medir o acerto da extração | `src/vitaliza/features.py` | | ⬜ |
 
 ## App Marimo · até 13/12
 
@@ -69,8 +69,8 @@
 
 | Data | # | Decisão | Motivo |
 |---|---|---|---|
-| 07/11 | — | Base da semana 5 = ativos no fim de 31/07 (14.032) | convenção da S3, reproduzida pelo código unificado |
-| 07/11 | D1 | Segmentação oficial: 4 segmentos de momento (S3) + camada de comportamento + sinais de texto (S1) | o guia pede 3–4 segmentos; separa mais (AUC 0,87) |
+| 07/11 | — | Base da semana 5 = ativos no fim de 31/07 (14.032) | reproduz os números do enunciado |
+| 07/11 | D1 | Segmentação oficial: 4 segmentos de momento + camada de comportamento + sinais de texto | o guia pede 3–4 segmentos; separa mais (AUC 0,87) |
 | 07/11 | D2 | **Anual com pouco uso (A e D): não contatar**, nem em teste | no sorteio, o contato aumentou o desligamento (cupom +5,9 pp, conteúdo +4,7 pp) |
 | 07/11 | D3 | **Idade e sexo fora** do modelo e dos gatilhos | LGPD; não separam (AUC 0,50); retirar não muda o modelo |
 | 07/11 | — | Camada de comportamento por regra (< 2 treinos/mês; % ao ar livre) em vez do k-means | mais simples de explicar; mesma separação |
@@ -85,3 +85,4 @@
 | 07/11/2026 | Decisões D1–D3 tomadas. Código unificado em `src/vitaliza/` (com as duplicadas removidas). Artefatos da semana 5 gerados: relatório (5 p.), cartões de persona (4), mini deck (5 slides), EDA (notebook + 11 gráficos). Modelo retreinado sem idade e sexo. |
 | 07/11/2026 | Tudo levado para o repositório do grupo, branch `dev`, num commit só. |
 | 07/11/2026 | Entrega única da semana 5 em `saidas/entrega_semana5/` (nomes `Vitaliza_G11_…`); entrega original da S3 movida para `saidas/solucao3/`. Script `src/montar_entrega_semana5.py` monta a pasta do Drive. |
+| 11/11/2026 | Repositório enxuto: ficam só a entrega da semana 5 e o código que a gera. Registros das três soluções, o pipeline antigo de scripts e o fluxograma saíram (recuperáveis no Git, commit `5900253`). Nomes simplificados: `notebooks/eda.ipynb`, `src/build_eda.py`, `saidas/graficos/`. |

@@ -1,4 +1,4 @@
-"""Caminhos da solução unificada. Os dados brutos ficam em dados/brutos/ (fora do Git)."""
+"""Caminhos do projeto. Os dados brutos ficam em dados/brutos/ (fora do Git)."""
 import os
 from pathlib import Path
 

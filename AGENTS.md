@@ -32,5 +32,5 @@ quem sai, por quê e em quem vale a pena agir. Enunciado e dicionário de dados 
 - JupyterLab (Windows): `.venv\Scripts\jupyter lab`
 - Recriar o ambiente: `python -m venv .venv` e depois `.venv\Scripts\python -m pip install -r requirements.txt`
 - macOS: `source .venv/bin/activate` · JupyterLab: `.venv/bin/jupyter lab` · recriar: `uv venv --python 3.12 .venv` e `uv pip install --python .venv/bin/python -r requirements.txt` (sem `pywinpty`, que é só do Windows)
-- EDA unificada (semana 5): `.venv/bin/python src/build_eda_unificada.py` (na raiz do projeto)
+- EDA da semana 5: `.venv/bin/python src/build_eda.py` · pasta para o Drive: `.venv/bin/python src/montar_entrega_semana5.py` (na raiz do projeto)
 - Python 3.12; pandas 3.1.0, pyarrow 26.0.0, matplotlib 3.11.2, jupyterlab 4.6.4 (lista completa em requirements.txt)

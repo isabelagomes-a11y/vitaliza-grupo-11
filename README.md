@@ -21,26 +21,16 @@ As regras de trabalho do grupo (e do agente) estão em [AGENTS.md](AGENTS.md).
 - `decisoes.md`: registro de todas as decisões de limpeza de dados.
 - `.gitignore`: mantém dados, ambiente Python e `.env` fora do GitHub.
 
-## Unificação dos três trabalhos (07/11/2026)
-
-O grupo fez três trabalhos em paralelo. Eles foram comparados e somados numa solução só:
-
-- **S1** — análise completa (diagnóstico, modelo, uplift da campanha, retorno, briefing da mensagem): `saidas/solucao1/`
-- **S2** — Plano de Inteligência de Retenção (deck para o Conselho): `saidas/solucao2/`
-- **S3** — este repositório: limpeza, EDA, segmentação e personas (`src/`, `notebooks/`, `saidas/`)
+## Entrega da semana 5
 
 | Onde | O quê |
 |---|---|
-| `docs/COMPARATIVO.md` | os três trabalhos lado a lado, aderência ao guia e números conferidos |
-| `docs/SOLUCAO_UNIFICADA.md` | o melhor de cada um, com a fonte de cada peça |
-| `ROADMAP.md` | fases até a semana 5 (15/11) e a semana 10 (20/12), com os critérios de avaliação |
-| `ACOMPANHAMENTO.md` | checklist vivo: decisões, donos, status, histórico |
-| `src/vitaliza/` | código unificado: base, limpeza, variáveis e segmentos |
-| `src/build_eda_unificada.py` | gera `notebooks/eda_unificada.ipynb`, os gráficos e os números |
-| `saidas/entrega_semana5/` | **entrega final da semana 5**: relatório de segmentação (5 p.), cartões de persona e mini deck, com as fontes em HTML |
+| `saidas/entrega_semana5/` | **entrega final**: relatório de segmentação (5 p.), cartões de persona e mini deck, com as fontes em HTML |
+| `notebooks/eda.ipynb` | EDA executada (carga, limpeza, padrões, correlações, segmentação) |
+| `saidas/graficos/` | os 11 gráficos dos documentos e `numeros.json` |
+| `src/vitaliza/` | código: leitura, limpeza, status de cada assinatura, variáveis e segmentos |
+| `src/build_eda.py` | gera o notebook, os gráficos e os números |
 | `src/montar_entrega_semana5.py` | monta a pasta para o Google Drive só com o que vai ser entregue |
-| `saidas/solucao3/` | registro da entrega original da S3 (Word, PowerPoint e PDF) |
-| `saidas/graficos_unificados/` | os 11 gráficos dos documentos e `numeros.json` |
-| `docs/diagramas/` | fluxograma do sistema (`.drawio`, 3 páginas) e imagens PNG |
+| `ROADMAP.md` · `ACOMPANHAMENTO.md` | caminho até 15/11 e 20/12; decisões e status |
 
-Para gerar de novo a EDA unificada, na raiz do projeto: `.venv/bin/python src/build_eda_unificada.py` (Windows: `.venv\Scripts\python src\build_eda_unificada.py`).
+Na raiz do projeto: `.venv/bin/python src/build_eda.py` (Windows: `.venv\Scripts\python src\build_eda.py`).

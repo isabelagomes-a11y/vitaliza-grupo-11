@@ -1,7 +1,7 @@
 """Base analítica da semana 5 e os 4 segmentos de momento (+ camada de comportamento).
 
 Base: assinaturas pagas ativas no fim de 31/07/2026. Rótulo: a assinatura terminou até 29/09/2026 (60 dias).
-Segmentos [S3]: A anual com renovação em até 60 dias · B mensal com até 5 meses · C mensal com 6+ meses ·
+Segmentos: A anual com renovação em até 60 dias · B mensal com até 5 meses · C mensal com 6+ meses ·
 D anual com renovação depois de 60 dias. Camada: anual ativo × pouco uso; mensal ar livre × vídeo.
 """
 import numpy as np

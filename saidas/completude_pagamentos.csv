@@ -1,8 +1,0 @@
-coluna,vazios,pct_vazios,sem_conteudo,vazios_mais_sem_conteudo,pct_vazios_mais_sem_conteudo,criticidade,motivo
-pagamento_id,0,0.0,0,0,0.0,baixa,Só identifica a linha; foi pelos IDs consecutivos que se viu que 1.941 cobranças estavam duplicadas.
-user_id,0,0.0,0,0,0.0,alta,Liga a cobrança ao assinante. Completo; todos os usuários têm assinatura.
-data_hora,0,0.0,0,0,0.0,alta,"Situa a cobrança no tempo e permite usar só pagamentos até a data de referência. Lojas em UTC, site em Brasília (como nos eventos)."
-valor,0,0.0,0,0,0.0,alta,"É o valor do assinante (receita). Dois formatos ('34.90' e 'R$ 34,90', este só no site até 30/06/2025); negativos são estornos e chargebacks."
-metodo,0,0.0,0,0,0.0,média,O canal também está em assinaturas.csv; diverge em 48 assinantes (Pix com uma cobrança no cartão).
-status,0,0.0,0,0,0.0,alta,"Separa cobrança aprovada, recusada, estornada e chargeback; base para identificar saída por falha de cobrança."
-tentativa,0,0.0,0,0,0.0,média,"Não se comporta como no dicionário: das tentativas 2, só 54 vêm depois de uma recusa. Não usada; a falha de cobrança é vista pelo status e pelo período de carência."

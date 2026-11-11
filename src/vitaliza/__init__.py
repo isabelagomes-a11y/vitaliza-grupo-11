@@ -1,1 +1,1 @@
-"""Pacote da solução unificada Vitaliza (Módulo 2 · Inteli)."""
+"""Pacote do projeto Vitaliza · Grupo 11 (Módulo 2 · Inteli)."""

@@ -17,10 +17,10 @@ if DEST.exists():
 ent = RAIZ / "saidas" / "entrega_semana5"
 for pdf in sorted(ent.glob("Vitaliza_G11_*.pdf")):
     shutil.copy2(pdf, DEST / pdf.name)
-shutil.copy2(RAIZ / "notebooks" / "eda_unificada.ipynb", DEST / "EDA" / "eda_unificada.ipynb")
-shutil.copytree(RAIZ / "saidas" / "graficos_unificados", DEST / "EDA" / "graficos")
+shutil.copy2(RAIZ / "notebooks" / "eda.ipynb", DEST / "EDA" / "eda.ipynb")
+shutil.copytree(RAIZ / "saidas" / "graficos", DEST / "EDA" / "graficos")
 shutil.copytree(RAIZ / "src" / "vitaliza", DEST / "EDA" / "codigo" / "vitaliza", ignore=shutil.ignore_patterns("__pycache__"))
-shutil.copy2(RAIZ / "src" / "build_eda_unificada.py", DEST / "EDA" / "codigo" / "build_eda_unificada.py")
+shutil.copy2(RAIZ / "src" / "build_eda.py", DEST / "EDA" / "codigo" / "build_eda.py")
 shutil.copy2(RAIZ / "requirements.txt", DEST / "EDA" / "codigo" / "requirements.txt")
 
 (DEST / "LEIA-ME.md").write_text("""# Vitaliza · Grupo 11 · Entrega da semana 5
@@ -30,11 +30,11 @@ shutil.copy2(RAIZ / "requirements.txt", DEST / "EDA" / "codigo" / "requirements.
 | Negócios — Customer Segmentation Report | `Vitaliza_G11_Relatorio_Segmentacao.pdf` (5 páginas) |
 | Cartões de persona | `Vitaliza_G11_Cartoes_Persona.pdf` (4 cartões) |
 | Tecnologia — mini deck da EDA | `Vitaliza_G11_MiniDeck_EDA.pdf` (5 slides) |
-| Tecnologia — EDA (código + visualizações) | `EDA/eda_unificada.ipynb` (notebook executado), `EDA/graficos/` (11 gráficos e `numeros.json`), `EDA/codigo/` (código Python) |
+| Tecnologia — EDA (código + visualizações) | `EDA/eda.ipynb` (notebook executado), `EDA/graficos/` (11 gráficos e `numeros.json`), `EDA/codigo/` (código Python) |
 
 Os dados do case não estão nesta pasta. Para rodar o código: colocar os arquivos do data room em `dados/brutos/`
 (ou indicar a pasta na variável `VITALIZA_DADOS`), instalar `EDA/codigo/requirements.txt` e rodar
-`python build_eda_unificada.py` a partir da raiz do projeto.
+`python build_eda.py` a partir da raiz do projeto.
 """, encoding="utf-8")
 
 for p in sorted(DEST.rglob("*")):

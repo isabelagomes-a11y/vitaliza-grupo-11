@@ -11,28 +11,27 @@ nov  07 ──── 09 ──────────── 15 ║ 16 ───
 
 ## F0 · Unificar (07–09/11)
 
-- [x] Diretório unificado com os três trabalhos
-- [x] Comparativo e solução unificada
-- [x] Conferir os números da Solução 3 com o código da Solução 1
-- [x] Decisões: segmentação (S3), anual com pouco uso (não contatar), idade e sexo (fora)
+- [x] Comparar os três trabalhos do grupo e somar o melhor de cada um
+- [x] Conferir os números entre os trabalhos
+- [x] Decisões: segmentação de momento, anual com pouco uso (não contatar), idade e sexo (fora)
 - [ ] Decisão pendente: provedor de IA
-- [x] Juntar as três soluções no repositório do grupo (branch `dev`): S3 em `src/` e `saidas/`, S1 em `saidas/solucao1/`, S2 em `saidas/solucao2/`, código unificado em `src/vitaliza/`
+- [x] Repositório enxuto: só a entrega e o código que a gera (branch `dev`)
 
 ## F1 · Semana 5: Segmentação + EDA (09–15/11) · entrega 15/11
 
 O que o guia pede, e a base de cada peça:
 
-| Artefato | Formato | Audiência | Base | O que acrescentar |
-|---|---|---|---|---|
-| **Customer Segmentation Report** (negócios) | relatório executivo, 4–6 p. | Camila, Conselho | relatório da S3 | diagnóstico da subida (S1); sinais de "meta cumprida" e GPS por segmento (S1); campanha por segmento conferida; conflito do anual com pouco uso resolvido |
-| **Cartões de persona** | 1 cartão por segmento, nome no centro, lido em 10 s | Conselho, marketing, retenção | personas da S3 | o cartão em si (4 cartões) |
-| **EDA: código + visualizações** (tecnologia) | notebook + scripts | liderança técnica e produto | scripts da S3 + `src/` da S1 | um notebook de EDA só (sem modelo); gera os gráficos do relatório |
-| **Mini deck analítico** | 3–5 slides, gráfico no centro | liderança técnica e produto | mini deck da S3 | ajustar para no máximo 5 slides; um gráfico de S1 (decomposição ou GPS) |
+| Artefato | Formato | Audiência | Onde |
+|---|---|---|---|
+| **Customer Segmentation Report** (negócios) | relatório executivo, 4–6 p. | Camila, Conselho | `saidas/entrega_semana5/` |
+| **Cartões de persona** | 1 cartão por segmento, nome no centro, lido em 10 s | Conselho, marketing, retenção | `saidas/entrega_semana5/` |
+| **EDA: código + visualizações** (tecnologia) | notebook + código | liderança técnica e produto | `notebooks/eda.ipynb`, `src/`, `saidas/graficos/` |
+| **Mini deck analítico** | 3–5 slides, gráfico no centro | liderança técnica e produto | `saidas/entrega_semana5/` |
 
 Tarefas:
 - [x] Incorporar a remoção das 1.941 cobranças duplicadas ao código da S1
-- [x] Notebook de EDA unificado (carrega, limpa, visualiza, correlações com churn, segmentação)
-- [x] Relatório executivo unificado (5 p.)
+- [x] Notebook de EDA (carrega, limpa, visualiza, correlações com churn, segmentação)
+- [x] Relatório executivo (5 p.)
 - [x] 4 cartões de persona
 - [x] Mini deck (5 slides)
 - [ ] Revisão do grupo (13–14/11)
@@ -42,7 +41,7 @@ Tarefas:
 
 - [ ] Ler o feedback da semana 5 (o professor tem até 2 semanas)
 - [x] Modelo sem idade e sexo (LGPD): AUC 0,936, captura 66,1% (sem perda)
-- [ ] Levar o modelo para o código unificado (`vitaliza/model.py`)
+- [ ] Levar o modelo para `src/vitaliza/model.py`
 - [ ] Métricas da rubrica: AUC-ROC, **matriz de confusão**, limiar escolhido pelo custo, **precisão × recall** justificados para retenção
 - [ ] Interpretação: importância das variáveis e **análise de erros** (quem o modelo erra e por quê)
 - [ ] Modelo salvo para o app (arquivo carregável)
