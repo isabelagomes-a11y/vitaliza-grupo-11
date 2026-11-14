@@ -3,6 +3,8 @@
 Rodar a partir da raiz do repositório:  .venv/bin/python src/build_eda.py
 Saídas: gráficos SVG e numeros.json em saidas/graficos/.
 """
+import os
+
 import nbformat as nbf
 from nbclient import NotebookClient
 
@@ -276,6 +278,6 @@ print("ok:", sorted(p.name for p in G.glob("*.svg")))
 """)
 
 nb = nbf.v4.new_notebook(cells=cells, metadata={"kernelspec": {"name": "python3", "display_name": "Python 3", "language": "python"}})
-NotebookClient(nb, timeout=1800, kernel_name="python3", resources={"metadata": {"path": "notebooks"}}).execute()
+NotebookClient(nb, timeout=1800, kernel_name=os.environ.get("VITALIZA_KERNEL", "python3"), resources={"metadata": {"path": "notebooks"}}).execute()
 nbf.write(nb, "notebooks/eda.ipynb")
 print("notebook ok")
