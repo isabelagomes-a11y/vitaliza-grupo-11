@@ -1,4 +1,4 @@
-# Projeto Vitaliza · grupo 11
+# Projeto Vitaliza · grupo 10
 
 ## O case
 A Vitaliza é um app de assinatura para quem treina. O grupo estuda a saída de assinantes:
@@ -35,6 +35,8 @@ quem sai, por quê e em quem vale a pena agir. Enunciado e dicionário de dados 
 - Semana 5, na raiz do projeto (macOS: `.venv/bin/python`; Windows: `.venv\Scripts\python`, com barras `\`):
   - EDA: `src/build_eda.py` · k-means de apoio: `src/build_kmeans.py` · pasta para o Drive: `src/montar_entrega_semana5.py`
   - conferência com o enunciado: `src/conferencia_enunciado.py` · completude de uma base: `src/completude.py <base>`
+  - relatório e mini deck: `src/entrega/dados.py`, `src/entrega/graficos.py`, `src/entrega/relatorio.py`, `src/entrega/minideck.py`
+    (o PDF sai do Word e do PowerPoint)
   - no Windows, os scripts que executam notebooks precisam do kernel do `.venv`: registre uma vez com
     `.venv\Scripts\python -m ipykernel install --prefix .venv --name vitaliza` e rode com `$env:VITALIZA_KERNEL = "vitaliza"`
 - Python 3.12; pandas 3.1.0, pyarrow 26.0.0, matplotlib 3.11.2, jupyterlab 4.6.4 (lista completa em requirements.txt)

@@ -145,7 +145,7 @@ md("""
   naturais de cliente. E o **k = 4 é instável**: o ARI médio entre subamostras é 0,67 (mínimo 0,55), contra 0,93 em
   k = 3 e 0,99 em k = 7. Um agrupamento que muda conforme a amostra não serve para operar todo mês.
 - **O k-means encontra plano × perfil de treino** (anual ou mensal; ar livre ou vídeo). Sozinho, separa pouco o churn
-  (AUC 0,62): não enxerga *quando* o anual pode sair, que é uma regra de calendário (a renovação).
+  (AUC 0,61): não enxerga *quando* o anual pode sair, que é uma regra de calendário (a renovação).
 - **No mensal, a regra e o k-means dão a mesma camada** (ar livre × vídeo coincidem em 100% dos assinantes de B e C).
 - **No anual, o k-means não acha o que importa.** Dentro do A, a camada do k-means separa 40,5% (ar livre) de 50,3%
   (vídeo); a regra de uso separa **68,2% (pouco uso) de 17,8% (ativo)**. O pouco uso não aparece como grupo porque o

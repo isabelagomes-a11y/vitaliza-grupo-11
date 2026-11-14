@@ -1,4 +1,4 @@
-# Vitaliza · grupo 11
+# Vitaliza · grupo 10
 
 Projeto do MBA Inteli (Aula 2) sobre o case Vitaliza, um app de assinatura para quem treina.
 O grupo analisa a saída de assinantes: quem sai, por quê e em quem vale a pena agir.
@@ -25,7 +25,8 @@ As regras de trabalho do grupo (e do agente) estão em [AGENTS.md](AGENTS.md).
 
 | Onde | O quê |
 |---|---|
-| `saidas/entrega_semana5/` | **entrega final**: relatório de segmentação (5 p.), cartões de persona e mini deck, com as fontes em HTML |
+| `saidas/entrega_semana5/` | **entrega final** (Grupo 10: Igor Moreira, Isabela Gomes, Lucas Murta, Roberto Fernandes Fortes Neto): relatório de segmentação (5 p.) e mini deck (capa + 5 slides) em PDF, Word e PowerPoint; cartões de persona em PDF, com a fonte em HTML |
+| `src/entrega/` | gera o relatório e o mini deck a partir dos números do código (`dados.py` → `graficos.py` → `relatorio.py`, `minideck.py`) |
 | `notebooks/eda.ipynb` | EDA executada (carga, limpeza, padrões, correlações, segmentação) |
 | `saidas/graficos/` | os 11 gráficos dos documentos e `numeros.json`; 12 e 13 e `kmeans.json` vêm do notebook do k-means |
 | `src/vitaliza/` | código: leitura, limpeza, status de cada assinatura, variáveis e segmentos |
