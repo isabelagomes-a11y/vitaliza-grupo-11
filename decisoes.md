@@ -1,5 +1,7 @@
 # Registro de decisões
 
+> As decisões de 01/11 a 07/11 foram aplicadas por scripts separados em `src/` e tabelas em `dados/processados/`. Em 11/11 esse pipeline foi substituído pelo código de `src/vitaliza/`, que aplica as mesmas regras de fuso, status, duplicadas e grafias em memória (sem tabelas intermediárias). Os scripts antigos continuam no histórico do Git (commit `5900253`).
+
 | Data | Arquivo | Problema | Decisão | Critério | Linhas afetadas | Quem |
 |------|---------|----------|---------|----------|-----------------|------|
 | 2026-11-01 | usuarios.csv | Contas sem `data_nascimento` (5,08%) ou sem `sexo` (4,84%) | **Remover** da base master `dados/processados/usuarios_master.csv`, que passa a ser a base chave do projeto. Motivo: data de nascimento e sexo são consideradas variáveis de alta importância para a análise (criticidade alta). IDs removidos e motivo em `dados/processados/usuarios_removidos.csv`; script `src/usuarios_master.py`. Risco aceito: as contas removidas ficam fora da contagem de pagantes e do churn, que podem não bater com o enunciado | Célula vazia ou só com espaços em `data_nascimento` ou em `sexo` | 6.285 de 64.948 (9,68%): 3.143 só sem nascimento, 2.984 só sem sexo, 158 sem os dois. Restam 58.663 | grupo 11 |
@@ -27,3 +29,38 @@
 | 2026-11-07 | onboarding.csv | `dias_por_semana` em 23 grafias ("3", "3x", "3 vezes", "todos"…) | **Corrigir** para número na base analítica (`dias_semana_pretendidos`): "Nx" e "N vezes" → N; "todos" → 7; vazio continua vazio. Motivo: comparar a frequência pretendida com a real, hipótese de driver de churn. Script `src/base_analitica.py`, saída `dados/processados/base_analitica.csv` | Regra acima; o script para se aparecer grafia sem regra | Na base de 14.032 assinantes: 1.412 vazias. No arquivo todo: 63.929 linhas, 917 "todos" | grupo 11 |
 | 2026-11-07 | usuarios.csv | A idade da master é calculada em 01/11/2026, depois do corte | **Corrigir** na base analítica: `idade_ref` em anos completos na data de referência (31/07/2026); vazia quando falta nascimento ou a idade sai de 0 a 100 (marcação, sem remover o assinante). A idade de 01/11 segue na master. Motivo: nenhuma variável da análise usa data posterior à referência | `idade_em(nascimento, 31/07/2026)` fora de 0 a 100 → vazio | 849 dos 14.032 assinantes com `idade_ref` vazia | grupo 11 |
 | 2026-11-07 | campanha_ago26.csv | A campanha de 10/08 caiu dentro da janela do churn (01/08 a 29/09) e pode alterar o rótulo | **Marcar** `grupo_campanha` (controle, desafio, cupom, conteudo) na base analítica, só como controle; não entra na segmentação. Vazio = não sorteado | Junção por `user_id` | 13.778 sorteados; 254 sem grupo, todos saíram na janela (252 antes de 10/08) | grupo 11 |
+| 2026-11-07 | todas as bases | Três trabalhos paralelos (S1 análise completa, S2 plano de retenção, S3 este repositório) com números e escolhas diferentes | **Unificar**: segmentação oficial = os 4 segmentos de momento da S3 (A, B, C, D) + camada de comportamento + sinais de texto da S1. Comparação e solução unificada no histórico do Git (commit `5900253`) | O guia pede 3–4 segmentos; as regras de momento separam mais (AUC 0,85; 0,87 com a camada) | 0 linhas alteradas | grupo 11 |
+| 2026-11-07 | base de 31/07/2026 | Camada de comportamento: o k-means da S3 é difícil de explicar e de recalcular todo mês | **Trocar por regra**: anual = ativo × pouco uso (menos de 2 treinos/mês em mai–jul, pelo uso_mensal); mensal = ar livre × vídeo (≥ 50% dos treinos ao ar livre). Script `src/vitaliza/segmentos.py` | Média de treinos de mai–jul < 2 → pouco uso; % de corrida, caminhada e pedal ≥ 50% → ar livre | 14.032 assinantes; A pouco uso passa de 1.073 (k-means) para 746 (regra); mesma separação (AUC 0,87) | grupo 11 |
+| 2026-11-07 | campanha_ago26.csv | Anual com pouco uso (A e D): a S3 propunha agir; no sorteio de 10/08, o contato aumentou o desligamento da renovação nesse grupo | **Não contatar** o anual com pouco uso, nem em teste; monitorar e recalcular todo mês | Sorteio contra controle: cupom +5,9 pp, conteúdo +4,7 pp de desligamento (IC sem o zero), controle 6,3% | 3.342 assinantes (746 do A, 2.596 do D) | grupo 11 |
+| 2026-11-07 | usuarios.csv | Idade e sexo não separam quem sai (AUC 0,50) e não podem ser gatilho de ação (LGPD, art. 6º, IX) | **Tirar** idade e sexo do modelo e de qualquer gatilho; servem só para descrever (gêmeo demográfico). A regra de 01/11 que removeu da master as contas sem nascimento ou sexo perde o motivo ("alta importância"); fica registrada, mas a base de assinantes não usa a master | Retreino sem as duas variáveis: AUC 0,936 (antes 0,935), captura no top 1.500 igual (66,1%) | 0 linhas alteradas | grupo 11 |
+| 2026-11-14 | base de 31/07/2026 | Escolhas do k-means de apoio à segmentação (aula 3: variáveis, escala, random_state e k, cada um com motivo) | **Variáveis:** log de treinos/mês, % ao ar livre, log do tempo de casa, meses até a renovação (anual) e plano; fora o rótulo, a renovação desligada (decisão já tomada), o valor e a demografia, e a queda de uso 0/1 (como binária, vira um grupo próprio). **Escala:** padronização (média 0, desvio 1), para nenhuma variável dominar pela unidade. **random_state = 42**, n_init = 20, para o resultado ser reproduzível. **k:** avaliado de 3 a 7 nas quatro lentes; nenhum separa bem (silhueta 0,27–0,31) e k = 4 é instável (ARI 0,67). **Decisão:** o k-means não entra na segmentação oficial; fica como evidência de que a camada por regra não perde informação. Script `src/build_kmeans.py`, notebook `notebooks/segmentacao_kmeans.ipynb` | AUC do esquema: segmentos + camada por regra 0,867; + camada do k-means 0,860; k-means sozinho 0,61 | 14.032 assinantes; 0 linhas alteradas | grupo 10 |
+
+## Onde cada decisão é aplicada hoje
+
+Desde 11/11 o código é `src/vitaliza/` (leitura e limpeza em memória). Os scripts originais de cada decisão estão na tag
+`pipeline-s3` (commit `fb6f62d`). Conferência da reconstrução contra o enunciado: `src/conferencia_enunciado.py` → 17 de 17
+números batem (`saidas/conferencia_enunciado.csv`).
+
+| Decisão (data · arquivo) | Situação no código atual |
+|---|---|
+| 01/11 · usuarios · remover da master quem não tem nascimento ou sexo | **Não aplicada.** Substituída pela decisão de 07/11 (idade e sexo fora); a base de assinantes não usa a master |
+| 01/11 · usuarios · remover idade impossível | **Aplicada de outro jeito.** `features.snapshot` limita a idade entre 14 e 90 anos em vez de deixar vazia; a idade só descreve (decisão de 07/11) |
+| 07/11 · eventos · fuso único (Brasília) | Aplicada: `base.to_brt` (UTC − 3 nas linhas com "Z") |
+| 07/11 · eventos · marcar plano ausente | Não reaplicada; sem efeito na semana 5 (o plano vem do último evento com plano) |
+| 07/11 · eventos + assinaturas · regra do período pago | Aplicada: `base.spells`. Diferença: o período termina no reembolso (32 casos), não só na expiração; o total de fins é o mesmo (17.830) e a conferência fecha |
+| 07/11 · eventos · marcar tipo de saída | Não reaplicada (`spells` guarda só se terminou por expiração ou reembolso) |
+| 07/11 · usuarios + assinaturas · contas internas fora das contagens | Aplicada: `base.spells` exclui o canal `interno` do retrato (60 assinaturas) |
+| 07/11 · uso_mensal · cobertura muda em 2026 | Sem efeito: a base de assinantes só usa pagantes |
+| 07/11 · uso_mensal · mês sem linha = zero | Aplicada: `segmentos.base_semana5` (sem a coluna de marcação) |
+| 07/11 · uso_mensal × parquet · fonte única | Aplicada para `treinos_mes` (uso_mensal); o % ao ar livre vem do `atividades.parquet` |
+| 07/11 · usuarios · padronizar sexo e sistema | Aplicada: `features.load_all` |
+| 07/11 · usuarios · padronizar cidade e completar CEP | Não reaplicada; colunas não usadas na semana 5 |
+| 07/11 · usuarios · marcar cadastro inválido, conta duplicada, início antes do cadastro | Não reaplicadas; nenhuma afeta a base de assinantes (0 cadastros inválidos, 170 contas duplicadas sem assinatura dupla, 0 inícios antes do cadastro) |
+| 07/11 · pagamentos · remover 1.941 cobranças duplicadas | Aplicada: `features.load_all` |
+| 07/11 · pagamentos · valor numérico e fuso | Aplicadas: `features.load_all` e `base.to_brt` |
+| 07/11 · pagamentos · não usar `tentativa` | Respeitada: recusas contadas pelo status |
+| 07/11 · pagamentos · marcar meio divergente e preço antigo | Não reaplicadas; sem efeito na semana 5 |
+| 07/11 · onboarding · dias por semana como número | Aplicada: `features.parse_dias` |
+| 07/11 · usuarios · idade na data de referência | Aplicada: `features.snapshot` (com o limite 14–90 acima) |
+| 07/11 · campanha · grupo só como controle | Aplicada: seção 5 de `src/build_eda.py` |
+| 07/11 · decisões de unificação (D1 a D3 e camada por regra) | Aplicadas: `segmentos.py`; a troca do k-means pela regra está sustentada em `notebooks/segmentacao_kmeans.ipynb` |

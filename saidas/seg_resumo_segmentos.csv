@@ -1,5 +1,0 @@
-segmento,n,pct_base,churn,churn_resto,diferenca_pp,pct_do_churn,gemeo_demografico,valor_mensal,receita_anual_em_risco,renov_desligada_n,treinos_mes,tempo_casa_mediana,idade
-A · Anual na porta da renovação,1362,0.0971,0.453,0.0672,38.5765,0.42,0.0668,21.8233,161501.76,554,1.33,11.0,47.0
-B · Mensal novato,2651,0.1889,0.1856,0.0858,9.9746,0.3349,0.0866,35.4449,209994.0,126,5.67,2.0,46.0
-C · Mensal veterano,3095,0.2206,0.1137,0.1021,1.1601,0.2396,0.1016,35.4306,150633.12,111,6.33,13.0,46.0
-D · Anual com renovação distante,6924,0.4934,0.0012,0.2055,-20.4388,0.0054,0.2061,21.6397,1979.04,1556,3.5,8.0,47.0
