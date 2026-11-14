@@ -1,14 +1,16 @@
-# Entrega da semana 5 · Grupo 11 · versão final
+# Entrega da semana 5 · Grupo 10 · versão final
 
-Versão única e final. Prazo: 15/11/2026, 23:59.
+Igor Moreira · Isabela Gomes · Lucas Murta · Roberto Fernandes Fortes Neto
 
 | O guia pede | Arquivo |
 |---|---|
-| **Negócios — Customer Segmentation Report** (relatório executivo: 3–4 segmentos com personas, drivers por segmento, priorização imediata × monitoramento, visualizações da EDA, limitações) | `Vitaliza_G11_Relatorio_Segmentacao.pdf` (5 p.) |
-| Cartões de persona (1 por segmento, nome no centro, lidos em 10 s) | `Vitaliza_G11_Cartoes_Persona.pdf` (4 cartões) |
-| **Tecnologia — EDA: mini deck** (3–5 slides, gráfico no centro) | `Vitaliza_G11_MiniDeck_EDA.pdf` (5 slides) |
-| **Tecnologia — EDA: código + visualizações** | `notebooks/eda.ipynb`, `src/vitaliza/`, `src/build_eda.py`, `saidas/graficos/` |
+| **Negócios — Customer Segmentation Report** (3–4 segmentos com personas, drivers por segmento, priorização imediata × monitoramento, visualizações da EDA, limitações) | `Vitaliza_G10_Relatorio_Segmentacao.pdf` (5 p.; editável em `.docx`) |
+| Cartões de persona (1 por segmento, nome no centro, lidos em 10 s) | `Vitaliza_G10_Cartoes_Persona.pdf` (4 cartões) |
+| **Tecnologia — apresentação executiva** (processo analítico e insights) | `Vitaliza_G10_MiniDeck_EDA.pdf` (capa + 5 slides; editável em `.pptx`, com notas do apresentador) |
+| **Tecnologia — repositório e documentação** | `notebooks/eda.ipynb`, `notebooks/segmentacao_kmeans.ipynb`, `src/`, `saidas/graficos/` e `decisoes.md` (cada decisão com motivo e onde é aplicada) |
 
-`fontes/` tem o HTML editável dos três PDFs (abra no navegador e imprima em PDF para gerar de novo).
+Todos os números vêm do código unificado em `src/vitaliza/`. Para gerar de novo (na raiz do projeto, depois de `src/build_eda.py` e `src/build_kmeans.py`):
+`src/entrega/dados.py` → `src/entrega/graficos.py` → `src/entrega/relatorio.py` e `src/entrega/minideck.py`; o PDF sai do Word e do PowerPoint (Salvar como PDF).
+`fontes/personas.html` gera o PDF dos cartões (abrir no navegador e imprimir em PDF).
 
-**Para o Google Drive** (pasta pública; cada integrante envia o link no Adalove): rode `.venv/bin/python src/montar_entrega_semana5.py` na raiz do projeto. Ele monta uma pasta só com os PDFs e a EDA (código, notebook e gráficos), sem dados.
+**Para o Google Drive** (pasta pública; cada integrante envia o link na Adalove): rode `src/montar_entrega_semana5.py` na raiz do projeto. Ele monta uma pasta só com os PDFs, a EDA (código, notebooks e gráficos) e o `decisoes.md`, sem dados.
