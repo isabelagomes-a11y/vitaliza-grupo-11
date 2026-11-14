@@ -1,0 +1,190 @@
+{
+ "lentes": [
+  {
+   "k": 3,
+   "inercia": 38549,
+   "silhueta": 0.309,
+   "estabilidade_ari": 0.927,
+   "ari_min": 0.636
+  },
+  {
+   "k": 4,
+   "inercia": 33842,
+   "silhueta": 0.288,
+   "estabilidade_ari": 0.667,
+   "ari_min": 0.552
+  },
+  {
+   "k": 5,
+   "inercia": 29231,
+   "silhueta": 0.282,
+   "estabilidade_ari": 0.928,
+   "ari_min": 0.669
+  },
+  {
+   "k": 6,
+   "inercia": 25488,
+   "silhueta": 0.297,
+   "estabilidade_ari": 0.868,
+   "ari_min": 0.615
+  },
+  {
+   "k": 7,
+   "inercia": 22600,
+   "silhueta": 0.298,
+   "estabilidade_ari": 0.989,
+   "ari_min": 0.979
+  }
+ ],
+ "com_queda_binaria": [
+  {
+   "grupo": 0,
+   "queda_uso": 0.0,
+   "plano_anual": 1.0
+  },
+  {
+   "grupo": 1,
+   "queda_uso": 1.0,
+   "plano_anual": 0.76
+  },
+  {
+   "grupo": 2,
+   "queda_uso": 0.0,
+   "plano_anual": 0.0
+  },
+  {
+   "grupo": 3,
+   "queda_uso": 0.0,
+   "plano_anual": 1.0
+  }
+ ],
+ "clusters": [
+  {
+   "cluster": "anual ar livre",
+   "n": 4644,
+   "churn": 0.062,
+   "treinos_mes": 3.333,
+   "ar_livre": 0.827,
+   "meses_casa": 9.724,
+   "renov_desligada": 0.266
+  },
+  {
+   "cluster": "anual vídeo",
+   "n": 3642,
+   "churn": 0.092,
+   "treinos_mes": 2.0,
+   "ar_livre": 0.12,
+   "meses_casa": 11.235,
+   "renov_desligada": 0.24
+  },
+  {
+   "cluster": "mensal ar livre",
+   "n": 3265,
+   "churn": 0.164,
+   "treinos_mes": 5.333,
+   "ar_livre": 0.801,
+   "meses_casa": 6.406,
+   "renov_desligada": 0.047
+  },
+  {
+   "cluster": "mensal vídeo",
+   "n": 2481,
+   "churn": 0.124,
+   "treinos_mes": 5.333,
+   "ar_livre": 0.154,
+   "meses_casa": 6.472,
+   "renov_desligada": 0.033
+  }
+ ],
+ "comparacao": [
+  {
+   "esquema": "k-means sozinho (4 grupos)",
+   "grupos": 4,
+   "auc": 0.615
+  },
+  {
+   "esquema": "segmentos de momento (regra)",
+   "grupos": 4,
+   "auc": 0.855
+  },
+  {
+   "esquema": "segmentos + camada do k-means",
+   "grupos": 8,
+   "auc": 0.86
+  },
+  {
+   "esquema": "segmentos + camada por regra (oficial)",
+   "grupos": 8,
+   "auc": 0.867
+  }
+ ],
+ "concordancia_mensal": 1.0,
+ "camada_regra": {
+  "A|ativo": {
+   "n": 624.0,
+   "churn": 0.178
+  },
+  "A|pouco uso": {
+   "n": 746.0,
+   "churn": 0.682
+  },
+  "B|ar livre": {
+   "n": 1545.0,
+   "churn": 0.214
+  },
+  "B|vídeo": {
+   "n": 1134.0,
+   "churn": 0.148
+  },
+  "C|ar livre": {
+   "n": 1719.0,
+   "churn": 0.119
+  },
+  "C|vídeo": {
+   "n": 1348.0,
+   "churn": 0.105
+  },
+  "D|ativo": {
+   "n": 4320.0,
+   "churn": 0.0
+  },
+  "D|pouco uso": {
+   "n": 2596.0,
+   "churn": 0.001
+  }
+ },
+ "camada_kmeans": {
+  "A|ar livre": {
+   "n": 708.0,
+   "churn": 0.405
+  },
+  "A|vídeo": {
+   "n": 662.0,
+   "churn": 0.503
+  },
+  "B|ar livre": {
+   "n": 1546.0,
+   "churn": 0.214
+  },
+  "B|vídeo": {
+   "n": 1133.0,
+   "churn": 0.147
+  },
+  "C|ar livre": {
+   "n": 1719.0,
+   "churn": 0.119
+  },
+  "C|vídeo": {
+   "n": 1348.0,
+   "churn": 0.105
+  },
+  "D|ar livre": {
+   "n": 3936.0,
+   "churn": 0.001
+  },
+  "D|vídeo": {
+   "n": 2980.0,
+   "churn": 0.001
+  }
+ }
+}
