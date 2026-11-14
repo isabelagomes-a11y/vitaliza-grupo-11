@@ -33,3 +33,33 @@
 | 2026-11-07 | base de 31/07/2026 | Camada de comportamento: o k-means da S3 é difícil de explicar e de recalcular todo mês | **Trocar por regra**: anual = ativo × pouco uso (menos de 2 treinos/mês em mai–jul, pelo uso_mensal); mensal = ar livre × vídeo (≥ 50% dos treinos ao ar livre). Script `src/vitaliza/segmentos.py` | Média de treinos de mai–jul < 2 → pouco uso; % de corrida, caminhada e pedal ≥ 50% → ar livre | 14.032 assinantes; A pouco uso passa de 1.073 (k-means) para 746 (regra); mesma separação (AUC 0,87) | grupo 11 |
 | 2026-11-07 | campanha_ago26.csv | Anual com pouco uso (A e D): a S3 propunha agir; no sorteio de 10/08, o contato aumentou o desligamento da renovação nesse grupo | **Não contatar** o anual com pouco uso, nem em teste; monitorar e recalcular todo mês | Sorteio contra controle: cupom +5,9 pp, conteúdo +4,7 pp de desligamento (IC sem o zero), controle 6,3% | 3.342 assinantes (746 do A, 2.596 do D) | grupo 11 |
 | 2026-11-07 | usuarios.csv | Idade e sexo não separam quem sai (AUC 0,50) e não podem ser gatilho de ação (LGPD, art. 6º, IX) | **Tirar** idade e sexo do modelo e de qualquer gatilho; servem só para descrever (gêmeo demográfico). A regra de 01/11 que removeu da master as contas sem nascimento ou sexo perde o motivo ("alta importância"); fica registrada, mas a base de assinantes não usa a master | Retreino sem as duas variáveis: AUC 0,936 (antes 0,935), captura no top 1.500 igual (66,1%) | 0 linhas alteradas | grupo 11 |
+
+## Onde cada decisão é aplicada hoje
+
+Desde 11/11 o código é `src/vitaliza/` (leitura e limpeza em memória). Os scripts originais de cada decisão estão na tag
+`pipeline-s3` (commit `fb6f62d`). Conferência da reconstrução contra o enunciado: `src/conferencia_enunciado.py` → 17 de 17
+números batem (`saidas/conferencia_enunciado.csv`).
+
+| Decisão (data · arquivo) | Situação no código atual |
+|---|---|
+| 01/11 · usuarios · remover da master quem não tem nascimento ou sexo | **Não aplicada.** Substituída pela decisão de 07/11 (idade e sexo fora); a base de assinantes não usa a master |
+| 01/11 · usuarios · remover idade impossível | **Aplicada de outro jeito.** `features.snapshot` limita a idade entre 14 e 90 anos em vez de deixar vazia; a idade só descreve (decisão de 07/11) |
+| 07/11 · eventos · fuso único (Brasília) | Aplicada: `base.to_brt` (UTC − 3 nas linhas com "Z") |
+| 07/11 · eventos · marcar plano ausente | Não reaplicada; sem efeito na semana 5 (o plano vem do último evento com plano) |
+| 07/11 · eventos + assinaturas · regra do período pago | Aplicada: `base.spells`. Diferença: o período termina no reembolso (32 casos), não só na expiração; o total de fins é o mesmo (17.830) e a conferência fecha |
+| 07/11 · eventos · marcar tipo de saída | Não reaplicada (`spells` guarda só se terminou por expiração ou reembolso) |
+| 07/11 · usuarios + assinaturas · contas internas fora das contagens | Aplicada: `base.spells` exclui o canal `interno` do retrato (60 assinaturas) |
+| 07/11 · uso_mensal · cobertura muda em 2026 | Sem efeito: a base de assinantes só usa pagantes |
+| 07/11 · uso_mensal · mês sem linha = zero | Aplicada: `segmentos.base_semana5` (sem a coluna de marcação) |
+| 07/11 · uso_mensal × parquet · fonte única | Aplicada para `treinos_mes` (uso_mensal); o % ao ar livre vem do `atividades.parquet` |
+| 07/11 · usuarios · padronizar sexo e sistema | Aplicada: `features.load_all` |
+| 07/11 · usuarios · padronizar cidade e completar CEP | Não reaplicada; colunas não usadas na semana 5 |
+| 07/11 · usuarios · marcar cadastro inválido, conta duplicada, início antes do cadastro | Não reaplicadas; nenhuma afeta a base de assinantes (0 cadastros inválidos, 170 contas duplicadas sem assinatura dupla, 0 inícios antes do cadastro) |
+| 07/11 · pagamentos · remover 1.941 cobranças duplicadas | Aplicada: `features.load_all` |
+| 07/11 · pagamentos · valor numérico e fuso | Aplicadas: `features.load_all` e `base.to_brt` |
+| 07/11 · pagamentos · não usar `tentativa` | Respeitada: recusas contadas pelo status |
+| 07/11 · pagamentos · marcar meio divergente e preço antigo | Não reaplicadas; sem efeito na semana 5 |
+| 07/11 · onboarding · dias por semana como número | Aplicada: `features.parse_dias` |
+| 07/11 · usuarios · idade na data de referência | Aplicada: `features.snapshot` (com o limite 14–90 acima) |
+| 07/11 · campanha · grupo só como controle | Aplicada: seção 5 de `src/build_eda.py` |
+| 07/11 · decisões de unificação (D1 a D3 e camada por regra) | Aplicadas: `segmentos.py`; a troca do k-means pela regra está sustentada em `notebooks/segmentacao_kmeans.ipynb` |
