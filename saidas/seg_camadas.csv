@@ -1,9 +1,0 @@
-segmento,camada,n,churn,saidas,valor_mensal,renov_desligada
-A · Anual na porta da renovação,ativo,289,0.1107,32,21.865,0.0415
-A · Anual na porta da renovação,pouco uso,1073,0.5452,585,21.812,0.5051
-B · Mensal novato,ar livre,1553,0.2138,332,35.3754,0.0573
-B · Mensal novato,vídeo,1098,0.1457,160,35.5433,0.0337
-C · Mensal veterano,ar livre,1735,0.1205,209,35.4301,0.0369
-C · Mensal veterano,vídeo,1360,0.1051,143,35.4311,0.0346
-D · Anual com renovação distante,ativo,4054,0.0007,3,21.5852,0.0871
-D · Anual com renovação distante,pouco uso,2870,0.0017,5,21.7167,0.4192

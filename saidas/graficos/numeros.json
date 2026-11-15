@@ -1,0 +1,372 @@
+{
+ "cobrancas_duplicadas": 1941,
+ "eventos_utc": 0.67614900295756,
+ "base_n": 14032,
+ "base_saidas": 1469,
+ "base_churn": 0.10468928164196123,
+ "decomp": {
+  "mensal": 0.8713363128515036,
+  "anual": 0.3687643798272512,
+  "mix": -0.24709253010615034
+ },
+ "did_preco": 4.651836622580027,
+ "pico_mensal_abr": 0.14494556765163297,
+ "android_gap_junjul": 2.3901659913718247,
+ "tempo_casa": {
+  "anual": {
+   "0–1 mês": 0.5,
+   "2–5 meses": 0.0,
+   "6–11 meses": 16.2,
+   "12–23 meses": 6.5,
+   "24+ meses": 5.7
+  },
+  "mensal": {
+   "0–1 mês": 17.9,
+   "2–5 meses": 19.0,
+   "6–11 meses": 14.8,
+   "12–23 meses": 10.0,
+   "24+ meses": 5.0
+  }
+ },
+ "uso": {
+  "0": 22.0,
+  "até 2": 12.5,
+  "2–4": 9.3,
+  "4–8": 9.1,
+  "8+": 6.4
+ },
+ "renov_desl_churn": 32.33788395904437,
+ "renov_ligada_churn": 6.083162217659138,
+ "renov_desl_share_saidas": 0.5159972770592239,
+ "auc": {
+  "mulher": 0.501,
+  "Android": 0.503,
+  "chamado de GPS": 0.504,
+  "idade": 0.505,
+  "relógio conectado": 0.508,
+  "seguidores": 0.508,
+  "tempo de casa": 0.51,
+  "post de meta cumprida": 0.546,
+  "queda de uso": 0.564,
+  "plano mensal": 0.592,
+  "treinos/mês": 0.617,
+  "sessões no app (julho)": 0.632,
+  "dias ativos (julho)": 0.637,
+  "dias desde o último treino": 0.667,
+  "renovação desligada": 0.695
+ },
+ "segmentos": [
+  {
+   "segmento": "A",
+   "n": 1370,
+   "churn": 0.4526,
+   "saidas": 620,
+   "valor": 22.1384,
+   "treinos": 3.9302,
+   "meses": 11.6623,
+   "renov_desl": 0.4066,
+   "loja": 0.7066,
+   "pct_saidas": 0.4221,
+   "receita_risco_ano": 164835.3865,
+   "resto_churn": 0.0671
+  },
+  {
+   "segmento": "B",
+   "n": 2679,
+   "churn": 0.1859,
+   "saidas": 498,
+   "valor": 35.4378,
+   "treinos": 5.87,
+   "meses": 2.6938,
+   "renov_desl": 0.047,
+   "loja": 0.6917,
+   "pct_saidas": 0.339,
+   "receita_risco_ano": 212589.4025,
+   "resto_churn": 0.0855
+  },
+  {
+   "segmento": "C",
+   "n": 3067,
+   "churn": 0.1128,
+   "saidas": 346,
+   "valor": 35.4325,
+   "treinos": 7.4642,
+   "meses": 13.3377,
+   "renov_desl": 0.0355,
+   "loja": 0.6955,
+   "pct_saidas": 0.2355,
+   "receita_risco_ano": 148018.3866,
+   "resto_churn": 0.1024
+  },
+  {
+   "segmento": "D",
+   "n": 6916,
+   "churn": 0.0007,
+   "saidas": 5,
+   "valor": 22.1413,
+   "treinos": 5.3907,
+   "meses": 8.7714,
+   "renov_desl": 0.2244,
+   "loja": 0.7052,
+   "pct_saidas": 0.0034,
+   "receita_risco_ano": 1316.591,
+   "resto_churn": 0.2057
+  }
+ ],
+ "camadas": [
+  {
+   "segmento": "A",
+   "camada": "ativo",
+   "n": 624,
+   "churn": 0.1779,
+   "valor": 22.0884,
+   "renov": 0.1218
+  },
+  {
+   "segmento": "A",
+   "camada": "pouco uso",
+   "n": 746,
+   "churn": 0.6823,
+   "valor": 22.1803,
+   "renov": 0.6448
+  },
+  {
+   "segmento": "B",
+   "camada": "ar livre",
+   "n": 1545,
+   "churn": 0.2136,
+   "valor": 35.3734,
+   "renov": 0.057
+  },
+  {
+   "segmento": "B",
+   "camada": "vídeo",
+   "n": 1134,
+   "churn": 0.1481,
+   "valor": 35.5255,
+   "renov": 0.0335
+  },
+  {
+   "segmento": "C",
+   "camada": "ar livre",
+   "n": 1719,
+   "churn": 0.1193,
+   "valor": 35.4366,
+   "renov": 0.0372
+  },
+  {
+   "segmento": "C",
+   "camada": "vídeo",
+   "n": 1348,
+   "churn": 0.1046,
+   "valor": 35.4273,
+   "renov": 0.0334
+  },
+  {
+   "segmento": "D",
+   "camada": "ativo",
+   "n": 4320,
+   "churn": 0.0005,
+   "valor": 22.1447,
+   "renov": 0.1238
+  },
+  {
+   "segmento": "D",
+   "camada": "pouco uso",
+   "n": 2596,
+   "churn": 0.0012,
+   "valor": 22.1357,
+   "renov": 0.3918
+  }
+ ],
+ "meta_cumprida": {
+  "0": {
+   "A": 43.6,
+   "B": 16.1,
+   "C": 9.5,
+   "D": 0.1
+  },
+  "1": {
+   "A": 60.4,
+   "B": 49.0,
+   "C": 29.9,
+   "D": 0.0
+  }
+ },
+ "queda_uso": {
+  "0": {
+   "A": 37.6,
+   "B": 16.1,
+   "C": 8.9,
+   "D": 0.1
+  },
+  "1": {
+   "A": 72.7,
+   "B": 45.6,
+   "C": 28.5,
+   "D": 0.0
+  }
+ },
+ "meta_share": {
+  "A": 0.098,
+  "B": 0.076,
+  "C": 0.088,
+  "D": 0.106
+ },
+ "campanha": {
+  "B · saída": {
+   "efeitos": {
+    "desafio": [
+     -4.37,
+     -8.35,
+     -0.39
+    ],
+    "cupom": [
+     -6.56,
+     -10.46,
+     -2.66
+    ],
+    "conteudo": [
+     -1.5,
+     -5.56,
+     2.57
+    ]
+   },
+   "controle": 18.3
+  },
+  "C · saída": {
+   "efeitos": {
+    "desafio": [
+     -2.71,
+     -5.69,
+     0.27
+    ],
+    "cupom": [
+     -4.93,
+     -7.75,
+     -2.1
+    ],
+    "conteudo": [
+     -0.83,
+     -3.96,
+     2.31
+    ]
+   },
+   "controle": 11.5
+  },
+  "A · saída": {
+   "efeitos": {
+    "desafio": [
+     1.8,
+     -5.2,
+     8.8
+    ],
+    "cupom": [
+     6.2,
+     -1.01,
+     13.41
+    ],
+    "conteudo": [
+     0.79,
+     -6.38,
+     7.95
+    ]
+   },
+   "controle": 37.2
+  },
+  "Anual pouco uso (A+D) · desligou": {
+   "efeitos": {
+    "desafio": [
+     2.43,
+     -0.09,
+     4.95
+    ],
+    "cupom": [
+     5.87,
+     3.15,
+     8.59
+    ],
+    "conteudo": [
+     4.71,
+     2.05,
+     7.38
+    ]
+   },
+   "controle": 6.3
+  }
+ },
+ "priorizacao": [
+  {
+   "segmento": "A",
+   "camada": "ativo",
+   "n": 624,
+   "churn": 0.1779,
+   "valor": 22.0884,
+   "renov": 0.1218,
+   "acao": "Imediata"
+  },
+  {
+   "segmento": "A",
+   "camada": "pouco uso",
+   "n": 746,
+   "churn": 0.6823,
+   "valor": 22.1803,
+   "renov": 0.6448,
+   "acao": "Não contatar"
+  },
+  {
+   "segmento": "B",
+   "camada": "ar livre",
+   "n": 1545,
+   "churn": 0.2136,
+   "valor": 35.3734,
+   "renov": 0.057,
+   "acao": "Imediata"
+  },
+  {
+   "segmento": "B",
+   "camada": "vídeo",
+   "n": 1134,
+   "churn": 0.1481,
+   "valor": 35.5255,
+   "renov": 0.0335,
+   "acao": "Imediata"
+  },
+  {
+   "segmento": "C",
+   "camada": "ar livre",
+   "n": 1719,
+   "churn": 0.1193,
+   "valor": 35.4366,
+   "renov": 0.0372,
+   "acao": "Imediata no gatilho"
+  },
+  {
+   "segmento": "C",
+   "camada": "vídeo",
+   "n": 1348,
+   "churn": 0.1046,
+   "valor": 35.4273,
+   "renov": 0.0334,
+   "acao": "Imediata no gatilho"
+  },
+  {
+   "segmento": "D",
+   "camada": "ativo",
+   "n": 4320,
+   "churn": 0.0005,
+   "valor": 22.1447,
+   "renov": 0.1238,
+   "acao": "Proteger"
+  },
+  {
+   "segmento": "D",
+   "camada": "pouco uso",
+   "n": 2596,
+   "churn": 0.0012,
+   "valor": 22.1357,
+   "renov": 0.3918,
+   "acao": "Não contatar"
+  }
+ ]
+}

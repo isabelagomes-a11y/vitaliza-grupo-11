@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Vitaliza · Cartões de persona</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  @page { size: 160mm 110mm; margin: 0; }
+  .card { width: 160mm; height: 110mm; page-break-after: always; display: flex; flex-direction: column; overflow: hidden; }
+  .card:last-child { page-break-after: auto; }
+  .band { height: 9mm; display: flex; align-items: center; justify-content: space-between; padding: 0 7mm; color: #fff; font-size: 7.5pt; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  .mid { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 10mm; }
+  .letter { width: 12mm; height: 12mm; border-radius: 3mm; color: #fff; font-size: 17pt; font-weight: 800; display: flex; align-items: center; justify-content: center; margin-bottom: 2.5mm; }
+  .name { font-size: 20pt; font-weight: 800; line-height: 1.1; letter-spacing: -.01em; margin-bottom: 2mm; }
+  .line { font-size: 9.5pt; color: var(--ink2); }
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line); }
+  .facts div { padding: 3mm 4mm 3.5mm; font-size: 8pt; color: var(--ink2); }
+  .facts div + div { border-left: 1px solid var(--line); }
+  .facts b { display: block; font-size: 12.5pt; color: var(--ink); line-height: 1.15; margin-bottom: .5mm; }
+  .facts .act b { font-size: 10pt; }
+  .stop b { color: var(--crit) !important; }
+</style>
+</head>
+<body>
+
+<section class="card">
+  <div class="band" style="background:var(--A)"><span>Persona A · imediata (ativo)</span><span>1.370 assinantes · 10% da base</span></div>
+  <div class="mid">
+    <div class="letter" style="background:var(--A)">A</div>
+    <div class="name">O anual que esfriou<br>antes de renovar</div>
+    <div class="line">A renovação vence nos próximos 60 dias. Ele decide no vencimento, mas desanimou meses antes.</div>
+  </div>
+  <div class="facts">
+    <div><b>45%</b>saem em 60 dias · 42% de todas as saídas</div>
+    <div><b>68% × 18%</b>saída de quem usa pouco × quem segue ativo</div>
+    <div class="act"><b>Ativo: plano antes do vencimento</b><span class="stop"><b style="font-size:9pt">Pouco uso: não contatar</b></span></div>
+  </div>
+</section>
+
+<section class="card">
+  <div class="band" style="background:var(--B)"><span>Persona B · imediata</span><span>2.679 assinantes · 19% da base</span></div>
+  <div class="mid">
+    <div class="letter" style="background:var(--B)">B</div>
+    <div class="name">O mensal que ainda<br>está decidindo</div>
+    <div class="line">Mensal há até 5 meses. A cada cobrança, pergunta se ainda vale R$ 39,90.</div>
+  </div>
+  <div class="facts">
+    <div><b>19%</b>saem em 60 dias · 34% das saídas · R$ 213 mil/ano em risco</div>
+    <div><b>49%</b>saem depois de postar "meta cumprida"</div>
+    <div class="act"><b>Desafio novo (corrida ou vídeo)</b>cupom só se desligar a renovação</div>
+  </div>
+</section>
+
+<section class="card">
+  <div class="band" style="background:var(--C)"><span>Persona C · imediata no gatilho</span><span>3.067 assinantes · 22% da base</span></div>
+  <div class="mid">
+    <div class="letter" style="background:var(--C)">C</div>
+    <div class="name">O mensal fiel que<br>pode escorregar</div>
+    <div class="line">Veterano e ativo. Não sai pelo tempo de casa: sai quando o hábito quebra.</div>
+  </div>
+  <div class="facts">
+    <div><b>11%</b>saem em 60 dias · 24% das saídas</div>
+    <div><b>28,5%</b>saem quando o uso cai à metade</div>
+    <div class="act"><b>Agir só no gatilho</b>queda de uso, meta cumprida, cobrança recusada</div>
+  </div>
+</section>
+
+<section class="card">
+  <div class="band" style="background:var(--D)"><span>Persona D · monitoramento</span><span>6.916 assinantes · 49% da base</span></div>
+  <div class="mid">
+    <div class="letter" style="background:var(--D)">D</div>
+    <div class="name">O anual garantido<br>até a renovação</div>
+    <div class="line">Já pagou o ano e não sai antes do vencimento. Quem usa pouco é o A dos próximos meses.</div>
+  </div>
+  <div class="facts">
+    <div><b>0,1%</b>saem agora · 2.596 usam pouco</div>
+    <div><b>+5,9 pp</b>no desligamento quando o anual que não usa foi contatado</div>
+    <div class="act stop"><b>Pouco uso: não contatar</b><span style="color:var(--ink2)">ativo: conteúdo leve, sem oferta</span></div>
+  </div>
+</section>
+
+</body>
+</html>
